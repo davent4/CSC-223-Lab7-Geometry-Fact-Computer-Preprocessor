@@ -71,8 +71,10 @@ public class Segment extends GeometricObject
 	 */
 	public boolean HasSubSegment(Segment candidate)
 	{
-        // TODO
-	}
+		//checks whether the endpoints of candidate are on this segment
+        return (SegmentDelegate.pointLiesOnSegment(this, candidate.getPoint1())) 
+        	&& (SegmentDelegate.pointLiesOnSegment(this, candidate.getPoint2()));	
+    }
 
 	/**
 	 * Determines if this segment and that segment share an endpoint
@@ -157,10 +159,23 @@ public class Segment extends GeometricObject
 	 *             |----------|==========|     
 	 * 
 	 * Note: the segment MAY share an endpoint
+	 * coincide means to be on the same infinite line
 	 */
 	public boolean coincideWithoutOverlap(Segment that)
 	{
-        // TODO
+		//check slope equality
+		if (!(MathUtilities.doubleEquals(_slope, that.slope()))) return false;
+		
+		//check for shared endpoint
+		if (_point1.equals(that.getPoint2()) ||	
+			_point2.equals(that.getPoint1()))	return true;
+		
+		//check for no overlap
+		if (_point1.getX() > that.getPoint2().getX() ||	
+			_point2.getX() < that.getPoint1().getX() )	return true; 
+		//TODO will not work using x values if a vertical line, otherwise it will
+		
+        return false;
 	}
 	
 	/**
