@@ -199,8 +199,8 @@ public class Preprocessor
 	//fix
 	private void constructAllNonMinimalSegments(Set<Segment> lastLevelSegs, List<Segment> minimalSegs, Set<Segment> nonMinimalSegs)
 	{
-		Segment combinedSegment = combineToNewSegment(left, right);
-		if (!combinedSegment.equals(null)) nonMinimalSegs.add(combinedSegment);
+		//Segment combinedSegment = combineToNewSegment(left, right);
+		//if (!combinedSegment.equals(null)) nonMinimalSegs.add(combinedSegment);
 	}
 
 	//
@@ -214,16 +214,18 @@ public class Preprocessor
 	// If both criteria are satisfied we have a new segment.
 	private Segment combineToNewSegment(Segment left, Segment right)
 	{
-		if(left.slope().equals(right.slope())) //how to do with doubles
-		{
-			if( left.sharedVertex(right) != null)
-			{
-				if(!left.getPoint1().equals(right.getPoint1())) return new Segment(left.getPoint1(), right.getPoint1());
-				if(!left.getPoint1().equals(right.getPoint2())) return new Segment(left.getPoint1(), right.getPoint2());
-				if(!left.getPoint2().equals(right.getPoint1())) return new Segment(left.getPoint2(), right.getPoint1());
-				if(!left.getPoint2().equals(right.getPoint2())) return new Segment(left.getPoint2(), right.getPoint1());
-			}
-		}
-		else return null;
-	}
+//		if(left.slope().equals(right.slope())) //how to do with doubles
+//		{
+//			if( left.sharedVertex(right) != null)
+//			{
+//				if(!left.getPoint1().equals(right.getPoint1())) return new Segment(left.getPoint1(), right.getPoint1());
+//				if(!left.getPoint1().equals(right.getPoint2())) return new Segment(left.getPoint1(), right.getPoint2());
+//				if(!left.getPoint2().equals(right.getPoint1())) return new Segment(left.getPoint2(), right.getPoint1());
+//				if(!left.getPoint2().equals(right.getPoint2())) return new Segment(left.getPoint2(), right.getPoint1());
+//			}
+//		}
+//		else return null;
+//	}
+		return null;
+}
 }

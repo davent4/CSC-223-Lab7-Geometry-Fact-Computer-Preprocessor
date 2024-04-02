@@ -22,15 +22,15 @@ public class ImplicitPointPreprocessor
 
 		Object[] segments = givenSegments.toArray();
 
-		for(int i = 0; i < segments.length - 1; i++)
+		for(int i = 0; i < segments.length; i++)
 		{
-			for (int x = i + 1; x < segments.length -1; x++)
+			for (int x = i + 1; x < segments.length; x++)
 			{
+				System.out.println(i +" "+ x);
 				Point impPoint =
 						geometry_objects.delegates.intersections.IntersectionDelegate
 						.segmentIntersection((Segment)segments[i], (Segment)segments[x]);
 				
-				//checks that impPoint is implicit or an end point
 				if(impPoint != null) implicitPoints.add(impPoint);
 			}
 		}
