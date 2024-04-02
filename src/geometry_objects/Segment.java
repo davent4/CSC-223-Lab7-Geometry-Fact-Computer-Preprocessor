@@ -217,12 +217,20 @@ public class Segment extends GeometricObject
 				 * the slope of a segment created from the given point and one 
 				 * endpoint matches the slope of this segment, then the point belongs
 				 */
-				if (p.getX() >= _point1.getX() &&
-					p.getX() <= _point2.getX() &&
+				if (Point.LexicographicOrdering(p, _point1) >= 0 &&
+					Point.LexicographicOrdering(p, _point2) <= 0 &&
 					MathUtilities.doubleEquals(_slope, s.slope())) 
 				{
 					pointsOn.add(p);
 				}
+				
+//				if (p.getX() >= _point1.getX() Point.LexicographicOrdering(p, _point1) >= 0 &&&&
+//					p.getX() <= _point2.getX() &&
+//					MathUtilities.doubleEquals(_slope, s.slope())) 
+//				{
+//					pointsOn.add(p);
+//				}
+
 			}
 		} 
 		//if it's a vertical segment
@@ -235,6 +243,7 @@ public class Segment extends GeometricObject
 			}
 		}
 
+		//are they currently ordered? no
 		return pointsOn;
 	}
 }
