@@ -2,11 +2,11 @@ package preprocessor;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.SortedSet;
 
 import geometry_objects.points.Point;
 import geometry_objects.points.PointDatabase;
@@ -48,9 +48,9 @@ public class Preprocessor
 	{
 		_pointDatabase  = points;
 		_givenSegments = segments;
-		
+
 		_segmentDatabase = new HashMap<Segment, Segment>();
-		
+
 		analyze();
 	}
 
@@ -87,7 +87,7 @@ public class Preprocessor
 		_allMinimalSegments.forEach((segment) -> _segmentDatabase.put(segment, segment));
 		_nonMinimalSegments.forEach((segment) -> _segmentDatabase.put(segment, segment));
 	}
-	
+
 	/**
 	 * If two segments cross at an unnamed point, the result is an implicit point.
 	 * 
@@ -102,9 +102,25 @@ public class Preprocessor
 	 */
 	protected Set<Segment> computeImplicitBaseSegments(Set<Point> impPoints)
 	{
-		// TODO
+		Set<Segment> impSegments = new HashSet<Segment>();
+
+		for(Segment segment:_givenSegments)
+		{
+			SortedSet<Point> pointsOnLine = new TreeSet<Point>();
+			for(Point point:impPoints)
+			{
+				if(geometry_objects.delegates.SegmentDelegate.pointLiesOnSegment(segment, point))
+				{
+					pointsOnLine.add(point);
+				}
+			}
+			pointsOnLine.add(segment.getPoint1());
+			pointsOnLine.add(segment.getPoint2());
+			impSegments.addAll(makeSegments(pointsOnLine));
+		}
+		return impSegments;
 	}
-	
+
 	/**
 	 * A set of ordered points:
 	 * 
@@ -114,14 +130,21 @@ public class Preprocessor
 	 * 
 	 *  1----------2------3----------4--------5
 	 *   
-	 * @param points -- an ordred list of points
+	 * @param points -- an ordered list of points
 	 * @return a set of n-1 segments between all points provided
 	 */
 	protected Set<Segment> makeSegments(SortedSet<Point> points)
 	{
-         // It's a utility method, TODO  if you would use it		
+		Set<Segment> segments = new HashSet<Segment>();
+		while (points.size() > 1)
+		{
+			Point point = points.first();
+			points.remove(point);
+			segments.add(new Segment(point, points.first()));
+		}
+		return segments; 
 	}
-	
+
 	/**
 	 * From the 'given' segments we remove any non-minimal segment.
 	 * 
@@ -135,10 +158,21 @@ public class Preprocessor
 			Set<Segment> minimalImpSegments)
 	{
 		Set<Segment> minimal = new HashSet<Segment>(minimalImpSegments);
-		
-		// TODO
+		//implicit points cannot be endpoints
+		//add all minimal imp segments
+		minimal.addAll(minimalImpSegments);
+
+		for(Segment currSegment : givenSegments)
+		{
+			if(currSegment.collectOrderedPointsOnSegment(impPoints).size() > 2)
+			{
+				minimal.remove(currSegment);
+			}
+		}
+
+		return minimal;
 	}
-	
+
 	/**
 	 * Given a set of minimal segments, build non-minimal segments by appending
 	 * minimal segments (one at a time).
@@ -154,11 +188,13 @@ public class Preprocessor
 		return nonMinimalSegs;
 	}
 
+	//fix
 	private void constructAllNonMinimalSegments(Set<Segment> lastLevelSegs, List<Segment> minimalSegs, Set<Segment> nonMinimalSegs)
 	{
-		// TODO if recursive implementation
+		Segment combinedSegment = combineToNewSegment(left, right);
+		if (!combinedSegment.equals(null)) nonMinimalSegs.add(combinedSegment);
 	}
-	
+
 	//
 	// Our goal is to stitch together segments that are on the same line:
 	//                       A---------B----------C
@@ -170,6 +206,16 @@ public class Preprocessor
 	// If both criteria are satisfied we have a new segment.
 	private Segment combineToNewSegment(Segment left, Segment right)
 	{
-        // It's a utility method, TODO  if you would use it	
+		if(left.slope().equals(right.slope())) //how to do with doubles
+		{
+			if( left.sharedVertex(right) != null)
+			{
+				if(!left.getPoint1().equals(right.getPoint1())) return new Segment(left.getPoint1(), right.getPoint1());
+				if(!left.getPoint1().equals(right.getPoint2())) return new Segment(left.getPoint1(), right.getPoint2());
+				if(!left.getPoint2().equals(right.getPoint1())) return new Segment(left.getPoint2(), right.getPoint1());
+				if(!left.getPoint2().equals(right.getPoint2())) return new Segment(left.getPoint2(), right.getPoint1());
+			}
+		}
+		else return null;
 	}
 }

@@ -1,5 +1,6 @@
 package preprocessor;
 
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -19,10 +20,80 @@ import preprocessor.delegates.ImplicitPointPreprocessor;
 
 class PreprocessorTest
 {
+	
+	@Test
+	void test_implicit_points()
+	{
+		FigureNode fig = InputFacade.extractFigure("crossing_symmetric_triangle.json");
+		
+		Map.Entry<PointDatabase, Set<Segment>> pair = InputFacade.toGeometryRepresentation(fig);
+		
+		PointDatabase points = pair.getKey();
+		Set<Segment> segments = pair.getValue();
+				
+		Preprocessor prePro = new Preprocessor(points, segments);
+		
+		int size = prePro._implicitPoints.size();
+		assertEquals(1, size);	
+		
+		FigureNode starFig = InputFacade.extractFigure("star.json");
+		
+		Map.Entry<PointDatabase, Set<Segment>> pairStar = InputFacade.toGeometryRepresentation(starFig);
+		
+		PointDatabase pointsStar = pairStar.getKey();
+		Set<Segment> segmentsStar = pairStar.getValue();
+				
+		Preprocessor preStar = new Preprocessor(pointsStar, segmentsStar);
+		
+		int sizeStar = preStar._implicitPoints.size();
+		
+		assertEquals(5, sizeStar);
+	}
+	
+	@Test
+	void test_segments()
+	{
+		FigureNode fig = InputFacade.extractFigure("crossing_symmetric_triangle.json");
+		
+		Map.Entry<PointDatabase, Set<Segment>> pair = InputFacade.toGeometryRepresentation(fig);
+		
+		PointDatabase points = pair.getKey();
+		Set<Segment> segments = pair.getValue();
+		
+		Preprocessor prePro = new Preprocessor(points, segments);
+		
+		int sizeImplicit = prePro._implicitSegments.size();
+		assertEquals(12, sizeImplicit);
+		
+		int sizeMin = prePro._allMinimalSegments.size();
+		assertEquals(10, sizeMin);
+		
+		int sizeNonMin = prePro._nonMinimalSegments.size();
+		assertEquals(8, sizeNonMin);
+		
+		assertEquals(sizeNonMin, prePro._givenSegments.size());
+	}
+	
+	@Test
+	void allSegments()
+	{
+		FigureNode fig = InputFacade.extractFigure("crossing_symmetric_triangle.json");
+		
+		Map.Entry<PointDatabase, Set<Segment>> pair = InputFacade.toGeometryRepresentation(fig);
+		
+		PointDatabase points = pair.getKey();
+		Set<Segment> segments = pair.getValue();
+		
+		Preprocessor prePro = new Preprocessor(points, segments);
+		
+		int segmentsFinal = prePro._segmentDatabase.size();
+		
+		assertEquals(18, segmentsFinal);
+	}
+	
 	@Test
 	void test_implicit_crossings()
 	{
-		                                 // TODO: Update this file path for your particular project
 		FigureNode fig = InputFacade.extractFigure("fully_connected_irregular_polygon.json");
 
 		Map.Entry<PointDatabase, Set<Segment>> pair = InputFacade.toGeometryRepresentation(fig);
