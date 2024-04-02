@@ -102,11 +102,13 @@ public class Preprocessor
 	 */
 	protected Set<Segment> computeImplicitBaseSegments(Set<Point> impPoints)
 	{
-		Set<Segment> impSegments = new HashSet<Segment>();
+		Set<Segment> impSegments = new HashSet<Segment>();		
 
 		for(Segment segment:_givenSegments)
 		{
 			SortedSet<Point> pointsOnLine = new TreeSet<Point>();
+			
+			//checks if any implicit point is on the segment
 			for(Point point:impPoints)
 			{
 				if(geometry_objects.delegates.SegmentDelegate.pointLiesOnSegment(segment, point))
@@ -116,6 +118,8 @@ public class Preprocessor
 			}
 			pointsOnLine.add(segment.getPoint1());
 			pointsOnLine.add(segment.getPoint2());
+			
+			//makes segment list from all points on the line
 			impSegments.addAll(makeSegments(pointsOnLine));
 		}
 		return impSegments;
@@ -136,6 +140,8 @@ public class Preprocessor
 	protected Set<Segment> makeSegments(SortedSet<Point> points)
 	{
 		Set<Segment> segments = new HashSet<Segment>();
+		
+		//creates segments from the ordered points
 		while (points.size() > 1)
 		{
 			Point point = points.first();
@@ -158,15 +164,17 @@ public class Preprocessor
 			Set<Segment> minimalImpSegments)
 	{
 		Set<Segment> minimal = new HashSet<Segment>(minimalImpSegments);
-		//implicit points cannot be endpoints
-		//add all minimal imp segments
+		
+		//add all previously known minimal imp segments
 		minimal.addAll(minimalImpSegments);
 
+		//checks if any given segments are minimal by checking if the endpoints
+		//are the only two points on the line
 		for(Segment currSegment : givenSegments)
 		{
-			if(currSegment.collectOrderedPointsOnSegment(impPoints).size() > 2)
+			if(currSegment.collectOrderedPointsOnSegment(impPoints).size() == 0)
 			{
-				minimal.remove(currSegment);
+				minimal.add(currSegment);
 			}
 		}
 
