@@ -173,7 +173,13 @@ public class Segment extends GeometricObject
 		//check for no overlap
 		if (_point1.getX() > that.getPoint2().getX() ||	
 			_point2.getX() < that.getPoint1().getX() )	return true; 
-		//TODO will not work using x values if a vertical line, otherwise it will
+		
+		if (MathUtilities.doubleEquals(_slope, Double.POSITIVE_INFINITY))
+		{
+			//check for no overlap when line is vertical
+			if (_point1.getY() > that.getPoint2().getY() ||	
+				_point2.getY() < that.getPoint1().getY() )	return true;
+		}
 		
         return false;
 	}
@@ -199,7 +205,35 @@ public class Segment extends GeometricObject
 	{
 		SortedSet<Point> pointsOn = new TreeSet<Point>();
 
-        // TODO
+		//if it's not vertical segment
+		if(!(MathUtilities.doubleEquals(_slope, Double.POSITIVE_INFINITY)))
+		{
+			for (Point p : points) 
+			{
+				Segment s = new Segment(_point1, p);
+				
+				/*
+				 * if the x value of the point is between the endpoints AND if 
+				 * the slope of a segment created from the given point and one 
+				 * endpoint matches the slope of this segment, then the point belongs
+				 */
+				if (p.getX() >= _point1.getX() &&
+					p.getX() <= _point2.getX() &&
+					MathUtilities.doubleEquals(_slope, s.slope())) 
+				{
+					pointsOn.add(p);
+				}
+			}
+		} 
+		//if it's a vertical segment
+		else 
+		{
+			for (Point p : points) 
+			{
+				if (p.getY() > _point1.getY() &&
+					p.getY() < _point2.getY() ) pointsOn.add(p);
+			}
+		}
 
 		return pointsOn;
 	}
