@@ -204,46 +204,59 @@ public class Segment extends GeometricObject
 	public SortedSet<Point> collectOrderedPointsOnSegment(Set<Point> points)
 	{
 		SortedSet<Point> pointsOn = new TreeSet<Point>();
-
-		//if it's not vertical segment
-		if(!(MathUtilities.doubleEquals(_slope, Double.POSITIVE_INFINITY)))
+		//TODO fix this using compareTo
+		
+		for(Point p : points)
 		{
-			for (Point p : points) 
-			{
-				Segment s = new Segment(_point1, p);
-				
-				/*
-				 * if the x value of the point is between the endpoints AND if 
-				 * the slope of a segment created from the given point and one 
-				 * endpoint matches the slope of this segment, then the point belongs
-				 */
-				if (Point.LexicographicOrdering(p, _point1) >= 0 &&
-					Point.LexicographicOrdering(p, _point2) <= 0 &&
-					MathUtilities.doubleEquals(_slope, s.slope())) 
-				{
-					pointsOn.add(p);
-				}
-				
-//				if (p.getX() >= _point1.getX() Point.LexicographicOrdering(p, _point1) >= 0 &&&&
-//					p.getX() <= _point2.getX() &&
+			if(p.compareTo(_point1) > 0) return null;
+		}
+		
+		return pointsOn;
+
+//		//if it's not vertical segment
+//		if(!(MathUtilities.doubleEquals(_slope, Double.POSITIVE_INFINITY)))
+//		{
+//			for (Point p : points) 
+//			{
+//				Segment s = new Segment(_point1, p);
+//			
+//				
+//				/*
+//				 * if the x value of the point is between the endpoints AND if 
+//				 * the slope of a segment created from the given point and one 
+//				 * endpoint matches the slope of this segment, then the point belongs
+//				 */
+//				if (Point.LexicographicOrdering(p, _point1) >= 0 &&
+//					Point.LexicographicOrdering(p, _point2) <= 0 &&
 //					MathUtilities.doubleEquals(_slope, s.slope())) 
 //				{
 //					pointsOn.add(p);
 //				}
-
-			}
-		} 
-		//if it's a vertical segment
-		else 
-		{
-			for (Point p : points) 
-			{
-				if (p.getY() > _point1.getY() &&
-					p.getY() < _point2.getY() ) pointsOn.add(p);
-			}
-		}
-
-		//are they currently ordered? no
-		return pointsOn;
+//				
+////				if (p.getX() >= _point1.getX() Point.LexicographicOrdering(p, _point1) >= 0 &&&&
+////					p.getX() <= _point2.getX() &&
+////					MathUtilities.doubleEquals(_slope, s.slope())) 
+////				{
+////					pointsOn.add(p);
+////				}
+//
+//			}
+//		} 
+//		//if it's a vertical segment
+//		else 
+//		{
+//			for (Point p : points) 
+//			{
+//				if (p.getY() > _point1.getY() &&
+//					p.getY() < _point2.getY() ) pointsOn.add(p);
+//			}
+//		}
+//
+//		return pointsOn;
+		
+	} 
+	
+	public String toString() {
+		return "[" + _point1.getName() + ", " + _point2.getName() + "]";
 	}
 }
