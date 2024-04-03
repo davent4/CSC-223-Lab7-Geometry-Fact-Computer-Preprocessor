@@ -204,13 +204,14 @@ public class Segment extends GeometricObject
 	public SortedSet<Point> collectOrderedPointsOnSegment(Set<Point> points)
 	{
 		SortedSet<Point> pointsOn = new TreeSet<Point>();
-		//TODO fix this using compareTo
 		
 		for(Point p : points)
 		{
-			if(p.compareTo(_point1) > 0) return null;
+			if(p.compareTo(_point1) > 0 &&
+			   p.compareTo(_point2) < 0)	pointsOn.add(p);
 		}
 		
+		//is this sorted??
 		return pointsOn;
 
 //		//if it's not vertical segment
@@ -256,6 +257,9 @@ public class Segment extends GeometricObject
 		
 	} 
 	
+	/**
+	 * returns object as a string
+	 */
 	public String toString() {
 		return "[" + _point1.getName() + ", " + _point2.getName() + "]";
 	}
