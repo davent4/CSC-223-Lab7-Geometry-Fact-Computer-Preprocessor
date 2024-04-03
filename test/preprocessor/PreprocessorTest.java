@@ -46,7 +46,7 @@ class PreprocessorTest
 		Preprocessor preStar = new Preprocessor(pointsStar, segmentsStar);
 		
 		int sizeStar = preStar._implicitPoints.size();
-		
+		System.out.println(preStar._implicitPoints);
 		assertEquals(5, sizeStar);
 	}
 	
