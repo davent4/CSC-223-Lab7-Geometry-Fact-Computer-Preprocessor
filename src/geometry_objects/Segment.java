@@ -163,18 +163,22 @@ public class Segment extends GeometricObject
 	 */
 	public boolean coincideWithoutOverlap(Segment that)
 	{
-		//check slope equality
-		if (!(MathUtilities.doubleEquals(_slope, that.slope()))) return false;
+		//check collinearity
+		if (!(LineDelegate.areCollinear(this, that))) return false;
 		
 		//check for shared endpoint
 		if (_point1.equals(that.getPoint2()) ||	
 			_point2.equals(that.getPoint1()))	return true;
 		
+//		//check for no overlap
+//		if (_point1.compareTo(that.getPoint2()) > 0 ||	
+//			_point2.compareTo(that.getPoint1()) < 0 )	return true; 
+		
 		//check for no overlap
 		if (_point1.getX() > that.getPoint2().getX() ||	
 			_point2.getX() < that.getPoint1().getX() )	return true; 
 		
-		if (MathUtilities.doubleEquals(_slope, Double.POSITIVE_INFINITY))
+		if (this.isVertical() && that.isVertical())
 		{
 			//check for no overlap when line is vertical
 			if (_point1.getY() > that.getPoint2().getY() ||	
@@ -183,6 +187,22 @@ public class Segment extends GeometricObject
 		
         return false;
 	}
+	
+//	public boolean coincideWithoutOverlap(Segment that)
+//	{
+//		//check collinearity
+//		if (!(LineDelegate.areCollinear(this, that))) return false;
+//		
+//		//check for shared endpoint
+//		if (_point1.equals(that.getPoint2()) ||	
+//			_point2.equals(that.getPoint1()))	return true;
+//		
+//		//check each endpoint of that for overlap
+//		if(SegmentDelegate.pointLiesBetweenEndpoints(this, that.getPoint1())) return false;
+//		if(SegmentDelegate.pointLiesBetweenEndpoints(this, that.getPoint2())) return false;
+//		
+//        return true;
+//	}
 	
 	/**
 	 *   Example:
@@ -207,54 +227,10 @@ public class Segment extends GeometricObject
 		
 		for(Point p : points)
 		{
-			if(p.compareTo(_point1) > 0 &&
-			   p.compareTo(_point2) < 0)	pointsOn.add(p);
+			if(SegmentDelegate.pointLiesOnSegment(this, p))	pointsOn.add(p);
 		}
 		
-		//is this sorted??
 		return pointsOn;
-
-//		//if it's not vertical segment
-//		if(!(MathUtilities.doubleEquals(_slope, Double.POSITIVE_INFINITY)))
-//		{
-//			for (Point p : points) 
-//			{
-//				Segment s = new Segment(_point1, p);
-//			
-//				
-//				/*
-//				 * if the x value of the point is between the endpoints AND if 
-//				 * the slope of a segment created from the given point and one 
-//				 * endpoint matches the slope of this segment, then the point belongs
-//				 */
-//				if (Point.LexicographicOrdering(p, _point1) >= 0 &&
-//					Point.LexicographicOrdering(p, _point2) <= 0 &&
-//					MathUtilities.doubleEquals(_slope, s.slope())) 
-//				{
-//					pointsOn.add(p);
-//				}
-//				
-////				if (p.getX() >= _point1.getX() Point.LexicographicOrdering(p, _point1) >= 0 &&&&
-////					p.getX() <= _point2.getX() &&
-////					MathUtilities.doubleEquals(_slope, s.slope())) 
-////				{
-////					pointsOn.add(p);
-////				}
-//
-//			}
-//		} 
-//		//if it's a vertical segment
-//		else 
-//		{
-//			for (Point p : points) 
-//			{
-//				if (p.getY() > _point1.getY() &&
-//					p.getY() < _point2.getY() ) pointsOn.add(p);
-//			}
-//		}
-//
-//		return pointsOn;
-		
 	} 
 	
 	/**
