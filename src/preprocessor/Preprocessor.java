@@ -107,7 +107,7 @@ public class Preprocessor
 		for(Segment segment:_givenSegments)
 		{
 			SortedSet<Point> pointsOnLine = new TreeSet<Point>();
-			
+
 			//checks if any implicit point is on the segment
 			for(Point point:impPoints)
 			{
@@ -118,7 +118,7 @@ public class Preprocessor
 			}
 			pointsOnLine.add(segment.getPoint1());
 			pointsOnLine.add(segment.getPoint2());
-			
+
 			//makes segment list from all points on the line
 			impSegments.addAll(makeSegments(pointsOnLine));
 		}
@@ -140,7 +140,7 @@ public class Preprocessor
 	protected Set<Segment> makeSegments(SortedSet<Point> points)
 	{
 		Set<Segment> segments = new HashSet<Segment>();
-		
+
 		//creates segments from the ordered points
 		while (points.size() > 1)
 		{
@@ -164,9 +164,6 @@ public class Preprocessor
 			Set<Segment> minimalImpSegments)
 	{
 		Set<Segment> minimal = new HashSet<Segment>(minimalImpSegments);
-		
-		//add all previously known minimal imp segments
-		minimal.addAll(minimalImpSegments);
 
 		//checks if any given segments are minimal by checking if the endpoints
 		//are the only two points on the line
@@ -196,11 +193,16 @@ public class Preprocessor
 		return nonMinimalSegs;
 	}
 
-	//fix
 	private void constructAllNonMinimalSegments(Set<Segment> lastLevelSegs, List<Segment> minimalSegs, Set<Segment> nonMinimalSegs)
 	{
-		//Segment combinedSegment = combineToNewSegment(left, right);
-		//if (!combinedSegment.equals(null)) nonMinimalSegs.add(combinedSegment);
+		for(Segment segment:lastLevelSegs)
+		{
+			for(Segment nextSegment:minimalSegs)
+			{
+				Segment combinedSegment = combineToNewSegment(segment, nextSegment);
+				if (!combinedSegment.equals(null)) nonMinimalSegs.add(combinedSegment);
+			}
+		}
 	}
 
 	//
@@ -214,18 +216,16 @@ public class Preprocessor
 	// If both criteria are satisfied we have a new segment.
 	private Segment combineToNewSegment(Segment left, Segment right)
 	{
-//		if(left.slope().equals(right.slope())) //how to do with doubles
-//		{
-//			if( left.sharedVertex(right) != null)
-//			{
-//				if(!left.getPoint1().equals(right.getPoint1())) return new Segment(left.getPoint1(), right.getPoint1());
-//				if(!left.getPoint1().equals(right.getPoint2())) return new Segment(left.getPoint1(), right.getPoint2());
-//				if(!left.getPoint2().equals(right.getPoint1())) return new Segment(left.getPoint2(), right.getPoint1());
-//				if(!left.getPoint2().equals(right.getPoint2())) return new Segment(left.getPoint2(), right.getPoint1());
-//			}
-//		}
-//		else return null;
-//	}
+		if(utilities.math.MathUtilities.doubleEquals(left.slope(),right.slope()))
+		{
+			if( left.sharedVertex(right) != null)
+			{
+				if(!left.getPoint1().equals(right.getPoint1())) return new Segment(left.getPoint1(), right.getPoint1());
+				if(!left.getPoint1().equals(right.getPoint2())) return new Segment(left.getPoint1(), right.getPoint2());
+				if(!left.getPoint2().equals(right.getPoint1())) return new Segment(left.getPoint2(), right.getPoint1());
+				if(!left.getPoint2().equals(right.getPoint2())) return new Segment(left.getPoint2(), right.getPoint1());
+			}
+		}
 		return null;
-}
+	}
 }

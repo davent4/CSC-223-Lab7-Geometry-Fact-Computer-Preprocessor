@@ -36,6 +36,20 @@ class PreprocessorTest
 		int size = prePro._implicitPoints.size();
 		assertEquals(1, size);	
 		
+		
+		FigureNode figsquare = InputFacade.extractFigure("box_with_twolines.json");
+		
+		Map.Entry<PointDatabase, Set<Segment>> pair2 = InputFacade.toGeometryRepresentation(figsquare);
+		
+		PointDatabase points2 = pair2.getKey();
+		Set<Segment> segments2 = pair2.getValue();
+				
+		Preprocessor square = new Preprocessor(points2, segments2);
+		
+		int sizeSquare = square._implicitPoints.size();
+		assertEquals(5, sizeSquare);	
+		
+		
 		FigureNode starFig = InputFacade.extractFigure("star.json");
 		
 		Map.Entry<PointDatabase, Set<Segment>> pairStar = InputFacade.toGeometryRepresentation(starFig);
@@ -46,7 +60,6 @@ class PreprocessorTest
 		Preprocessor preStar = new Preprocessor(pointsStar, segmentsStar);
 		
 		int sizeStar = preStar._implicitPoints.size();
-		System.out.println(preStar._implicitPoints);
 		assertEquals(5, sizeStar);
 	}
 	
