@@ -6,6 +6,8 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Set;
 
 import geometry_objects.points.Point;
@@ -188,22 +190,40 @@ public class Preprocessor
 	{
 		Set<Segment> nonMinimalSegs = new HashSet<Segment>();
 
-		constructAllNonMinimalSegments(minimalSegs, minimalSegs.stream().toList(), nonMinimalSegs);
+		Queue<Segment> segmentBuilding = new PriorityQueue<Segment>(minimalSegs);
 
+		while (!segmentBuilding.isEmpty())
+		{
+			Segment minimal = segmentBuilding.remove();
+
+			for(Segment segment : minimalSegs)
+			{
+				Segment combined = combineToNewSegment(minimal, segment);
+				if(combined != null)
+				{
+					if(!segmentBuilding.contains(new Segment(combined.getPoint2(), combined.getPoint1())))
+					{
+						segmentBuilding.add(combined);
+					}
+				}
+			}
+		}
+		//where to add to nonMinimalSegs?
 		return nonMinimalSegs;
 	}
 
-	private void constructAllNonMinimalSegments(Set<Segment> lastLevelSegs, List<Segment> minimalSegs, Set<Segment> nonMinimalSegs)
-	{
-		for(Segment segment:lastLevelSegs)
-		{
-			for(Segment nextSegment:minimalSegs)
-			{
-				Segment combinedSegment = combineToNewSegment(segment, nextSegment);
-				if (!combinedSegment.equals(null)) nonMinimalSegs.add(combinedSegment);
-			}
-		}
-	}
+	//	private void constructAllNonMinimalSegments(Set<Segment> lastLevelSegs, List<Segment> minimalSegs, Set<Segment> nonMinimalSegs)
+	//	{
+	//		for(Segment segment:lastLevelSegs)
+	//		{
+	//			//while loop
+	//			for(Segment nextSegment:minimalSegs)
+	//			{
+	//				Segment combinedSegment = combineToNewSegment(segment, nextSegment);
+	//				if (!combinedSegment.equals(null)) nonMinimalSegs.add(combinedSegment);
+	//			}
+	//		}
+	//	}
 
 	//
 	// Our goal is to stitch together segments that are on the same line:
@@ -216,7 +236,7 @@ public class Preprocessor
 	// If both criteria are satisfied we have a new segment.
 	private Segment combineToNewSegment(Segment left, Segment right)
 	{
-		if(utilities.math.MathUtilities.doubleEquals(left.slope(),right.slope()))
+		if(left.coincideWithoutOverlap(right))
 		{
 			if( left.sharedVertex(right) != null)
 			{
