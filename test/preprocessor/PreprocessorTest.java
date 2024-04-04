@@ -20,88 +20,125 @@ import preprocessor.delegates.ImplicitPointPreprocessor;
 
 class PreprocessorTest
 {
-	
-	@Test
-	void test_implicit_points()
+	//method to make PreProcessors with json filenames
+	public Preprocessor makePreProcessor(String json_filename)
 	{
-		FigureNode fig = InputFacade.extractFigure("crossing_symmetric_triangle.json");
+		FigureNode fig = InputFacade.extractFigure(json_filename);
 		
 		Map.Entry<PointDatabase, Set<Segment>> pair = InputFacade.toGeometryRepresentation(fig);
 		
 		PointDatabase points = pair.getKey();
 		Set<Segment> segments = pair.getValue();
 				
-		Preprocessor prePro = new Preprocessor(points, segments);
+		return new Preprocessor(points, segments);
+	}
+	
+	@Test
+	void test_implicit_points()
+	{		
+		Preprocessor prePro = makePreProcessor("crossing_symmetric_triangle.json");
 		
 		int size = prePro._implicitPoints.size();
 		assertEquals(1, size);	
 		
-		
-		FigureNode figsquare = InputFacade.extractFigure("box_with_twolines.json");
-		
-		Map.Entry<PointDatabase, Set<Segment>> pair2 = InputFacade.toGeometryRepresentation(figsquare);
-		
-		PointDatabase points2 = pair2.getKey();
-		Set<Segment> segments2 = pair2.getValue();
-				
-		Preprocessor square = new Preprocessor(points2, segments2);
+		//test with new figure
+		Preprocessor square = makePreProcessor("box_with_two_lines.json");
 		
 		int sizeSquare = square._implicitPoints.size();
 		assertEquals(5, sizeSquare);	
 		
-		
-		FigureNode starFig = InputFacade.extractFigure("star.json");
-		
-		Map.Entry<PointDatabase, Set<Segment>> pairStar = InputFacade.toGeometryRepresentation(starFig);
-		
-		PointDatabase pointsStar = pairStar.getKey();
-		Set<Segment> segmentsStar = pairStar.getValue();
-				
-		Preprocessor preStar = new Preprocessor(pointsStar, segmentsStar);
+		//test with new figure	
+		Preprocessor preStar = makePreProcessor("star.json");
 		
 		int sizeStar = preStar._implicitPoints.size();
 		assertEquals(5, sizeStar);
+		
+		//test with figure without implicit points				
+		Preprocessor preGrid = makePreProcessor("grid.json");
+		
+		int sizeGrid = preGrid._implicitPoints.size();
+		assertEquals(0, sizeGrid);
 	}
 	
 	@Test
-	void test_segments()
+	void test_implicit_Segments()
 	{
-		FigureNode fig = InputFacade.extractFigure("crossing_symmetric_triangle.json");
-		
-		Map.Entry<PointDatabase, Set<Segment>> pair = InputFacade.toGeometryRepresentation(fig);
-		
-		PointDatabase points = pair.getKey();
-		Set<Segment> segments = pair.getValue();
-		
-		Preprocessor prePro = new Preprocessor(points, segments);
+		Preprocessor prePro = makePreProcessor("crossing_symmetric_triangle.json");
 		
 		int sizeImplicit = prePro._implicitSegments.size();
-		assertEquals(12, sizeImplicit);
+		assertEquals(10, sizeImplicit);
 		
-		int sizeMin = prePro._allMinimalSegments.size();
-		assertEquals(10, sizeMin);
+		//test with new figure
+		Preprocessor square = makePreProcessor("box_with_two_lines.json");
 		
-		int sizeNonMin = prePro._nonMinimalSegments.size();
-		assertEquals(8, sizeNonMin);
+		int sizeSquare = square._implicitSegments.size();
+		assertEquals(16, sizeSquare);	
 		
-		assertEquals(sizeNonMin, prePro._givenSegments.size());
+		//test with new figure
+		Preprocessor preStar = makePreProcessor("star.json");
+		
+		int sizeStar = preStar._implicitSegments.size();
+		assertEquals(15, sizeStar);
+		
+		//test with figure without implicit points
+		Preprocessor preGrid = makePreProcessor("grid.json");
+		
+		int sizeGrid = preGrid._implicitSegments.size();
+		assertEquals(12, sizeGrid);
 	}
 	
 	@Test
-	void allSegments()
+	void test_allMinimal_Segments()
 	{
-		FigureNode fig = InputFacade.extractFigure("crossing_symmetric_triangle.json");
+		Preprocessor prePro = makePreProcessor("crossing_symmetric_triangle.json");
 		
-		Map.Entry<PointDatabase, Set<Segment>> pair = InputFacade.toGeometryRepresentation(fig);
+		int sizeImplicit = prePro._allMinimalSegments.size();
+		assertEquals(10, sizeImplicit);
 		
-		PointDatabase points = pair.getKey();
-		Set<Segment> segments = pair.getValue();
+		//test with new figure
+		Preprocessor square = makePreProcessor("box_with_two_lines.json");
 		
-		Preprocessor prePro = new Preprocessor(points, segments);
+		int sizeSquare = square._allMinimalSegments.size();
+		assertEquals(16, sizeSquare);	
 		
-		int segmentsFinal = prePro._segmentDatabase.size();
+		//test with new figure
+		Preprocessor preStar = makePreProcessor("star.json");
 		
-		assertEquals(18, segmentsFinal);
+		int sizeStar = preStar._allMinimalSegments.size();
+		assertEquals(15, sizeStar);
+		
+		//test with figure without implicit points
+		Preprocessor preGrid = makePreProcessor("grid.json");
+		
+		int sizeGrid = preGrid._allMinimalSegments.size();
+		assertEquals(12, sizeGrid);
+	}
+
+	@Test
+	void test_allNonMinimal_Segments()
+	{
+		Preprocessor prePro = makePreProcessor("crossing_symmetric_triangle.json");
+		
+		int sizeImplicit = prePro._nonMinimalSegments.size();
+		assertEquals(10, sizeImplicit);
+		
+		//test with new figure
+		Preprocessor square = makePreProcessor("box_with_two_lines.json");
+		
+		int sizeSquare = square._nonMinimalSegments.size();
+		assertEquals(16, sizeSquare);	
+		
+		//test with new figure
+		Preprocessor preStar = makePreProcessor("star.json");
+		
+		int sizeStar = preStar._nonMinimalSegments.size();
+		assertEquals(15, sizeStar);
+		
+		//test with figure without implicit points
+		Preprocessor preGrid = makePreProcessor("grid.json");
+		
+		int sizeGrid = preGrid._nonMinimalSegments.size();
+		assertEquals(12, sizeGrid);
 	}
 	
 	@Test
