@@ -26,7 +26,6 @@ public class ImplicitPointPreprocessor
 		{
 			for (int x = i + 1; x < segments.length; x++)
 			{
-				System.out.println(i +" "+ x);
 				Point impPoint =
 						geometry_objects.delegates.intersections.IntersectionDelegate
 						.segmentIntersection((Segment)segments[i], (Segment)segments[x]);
