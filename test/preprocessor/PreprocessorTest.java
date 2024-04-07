@@ -120,7 +120,7 @@ class PreprocessorTest
 		Preprocessor prePro = makePreProcessor("crossing_symmetric_triangle.json");
 		
 		int sizeImplicit = prePro._nonMinimalSegments.size();
-		assertEquals(10, sizeImplicit);
+		assertEquals(6, sizeImplicit);
 		
 		//test with new figure
 		Preprocessor square = makePreProcessor("box_with_two_lines.json");

@@ -2,11 +2,10 @@ package preprocessor;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
@@ -190,7 +189,7 @@ public class Preprocessor
 	{
 		Set<Segment> nonMinimalSegs = new HashSet<Segment>();
 
-		Queue<Segment> segmentBuilding = new PriorityQueue<Segment>(minimalSegs);
+		Queue<Segment> segmentBuilding = new LinkedList<Segment>(minimalSegs);
 
 		while (!segmentBuilding.isEmpty())
 		{
@@ -207,6 +206,7 @@ public class Preprocessor
 					}
 				}
 			}
+			
 		}
 		//where to add to nonMinimalSegs?
 		return nonMinimalSegs;
@@ -240,10 +240,10 @@ public class Preprocessor
 		{
 			if( left.sharedVertex(right) != null)
 			{
-				if(!left.getPoint1().equals(right.getPoint1())) return new Segment(left.getPoint1(), right.getPoint1());
-				if(!left.getPoint1().equals(right.getPoint2())) return new Segment(left.getPoint1(), right.getPoint2());
-				if(!left.getPoint2().equals(right.getPoint1())) return new Segment(left.getPoint2(), right.getPoint1());
-				if(!left.getPoint2().equals(right.getPoint2())) return new Segment(left.getPoint2(), right.getPoint1());
+				if(left.getPoint1().equals(right.getPoint1())) return new Segment(left.getPoint2(), right.getPoint2());
+				if(left.getPoint1().equals(right.getPoint2())) return new Segment(left.getPoint2(), right.getPoint1());
+				if(left.getPoint2().equals(right.getPoint1())) return new Segment(left.getPoint1(), right.getPoint2());
+				if(left.getPoint2().equals(right.getPoint2())) return new Segment(left.getPoint1(), right.getPoint1());
 			}
 		}
 		return null;
