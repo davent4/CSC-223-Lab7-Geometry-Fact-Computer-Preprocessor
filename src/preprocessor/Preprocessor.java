@@ -85,8 +85,8 @@ public class Preprocessor
 		//
 		// Combine minimal and non-minimal into one package: our database
 		//
-		_allMinimalSegments.forEach((segment) -> _segmentDatabase.put(segment, segment));
-		_nonMinimalSegments.forEach((segment) -> _segmentDatabase.put(segment, segment));
+//		_allMinimalSegments.forEach((segment) -> _segmentDatabase.put(segment, segment));
+//		_nonMinimalSegments.forEach((segment) -> _segmentDatabase.put(segment, segment));
 	}
 
 	/**
@@ -117,8 +117,12 @@ public class Preprocessor
 					pointsOnLine.add(point);
 				}
 			}
-			pointsOnLine.add(segment.getPoint1());
-			pointsOnLine.add(segment.getPoint2());
+			//if a point was added: keeps only implicitMinSegs vs all minSegs
+//			if(pointsOnLine.size() != 0)
+//			{
+				pointsOnLine.add(segment.getPoint1());
+				pointsOnLine.add(segment.getPoint2());
+//			}
 
 			//makes segment list from all points on the line
 			impSegments.addAll(makeSegments(pointsOnLine));
@@ -161,8 +165,8 @@ public class Preprocessor
 	 * @return -- a 
 	 */
 	protected Set<Segment> identifyAllMinimalSegments(Set<Point> impPoints,
-			Set<Segment> givenSegments,
-			Set<Segment> minimalImpSegments)
+													  Set<Segment> givenSegments,
+													  Set<Segment> minimalImpSegments)
 	{
 		Set<Segment> minimal = new HashSet<Segment>(minimalImpSegments);
 
@@ -175,6 +179,7 @@ public class Preprocessor
 				minimal.add(currSegment);
 			}
 		}
+		//TODO right now, this for loop does nothing bc all the minimal seg are already in impSeg
 
 		return minimal;
 	}
@@ -198,17 +203,18 @@ public class Preprocessor
 			for(Segment segment : minimalSegs)
 			{
 				Segment combined = combineToNewSegment(minimal, segment);
+				//creates BD when given AD and AB
 				if(combined != null)
 				{
-					if(!segmentBuilding.contains(new Segment(combined.getPoint2(), combined.getPoint1())))
+					nonMinimalSegs.add(combined); 
+					if(!segmentBuilding.contains(new Segment(combined.getPoint2(), combined.getPoint1())));
+					//if(!minimalSegs.contains(combined))
 					{
 						segmentBuilding.add(combined);
 					}
 				}
 			}
-			
 		}
-		//where to add to nonMinimalSegs?
 		return nonMinimalSegs;
 	}
 

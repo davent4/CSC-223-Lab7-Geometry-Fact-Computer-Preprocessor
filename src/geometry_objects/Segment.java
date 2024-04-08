@@ -170,10 +170,6 @@ public class Segment extends GeometricObject
 		if (_point1.equals(that.getPoint2()) ||	
 			_point2.equals(that.getPoint1()))	return true;
 		
-//		//check for no overlap
-//		if (_point1.compareTo(that.getPoint2()) > 0 ||	
-//			_point2.compareTo(that.getPoint1()) < 0 )	return true; 
-		
 		//check for no overlap
 		if (_point1.getX() > that.getPoint2().getX() ||	
 			_point2.getX() < that.getPoint1().getX() )	return true; 

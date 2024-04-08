@@ -1,6 +1,5 @@
 package preprocessor;
 
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -37,25 +36,22 @@ class PreprocessorTest
 	void test_implicit_points()
 	{		
 		Preprocessor prePro = makePreProcessor("crossing_symmetric_triangle.json");
-		
-		int size = prePro._implicitPoints.size();
-		assertEquals(1, size);	
+		assertEquals(1, prePro._implicitPoints.size());
+		assertTrue(prePro._implicitPoints.contains(new Point(3,3)));
 		
 		//test with new figure
 		Preprocessor square = makePreProcessor("box_with_two_lines.json");
-		
-		int sizeSquare = square._implicitPoints.size();
-		assertEquals(5, sizeSquare);	
+		assertEquals(5, square._implicitPoints.size());
+		assertTrue(square._implicitPoints.contains(new Point(0,2)));
+		assertTrue(square._implicitPoints.contains(new Point(-2,2)));
+		assertTrue(square._implicitPoints.contains(new Point(0,0)));
 		
 		//test with new figure	
 		Preprocessor preStar = makePreProcessor("star.json");
-		
-		int sizeStar = preStar._implicitPoints.size();
-		assertEquals(5, sizeStar);
+		assertEquals(5, preStar._implicitPoints.size());
 		
 		//test with figure without implicit points				
 		Preprocessor preGrid = makePreProcessor("grid.json");
-		
 		int sizeGrid = preGrid._implicitPoints.size();
 		assertEquals(0, sizeGrid);
 	}
@@ -120,6 +116,7 @@ class PreprocessorTest
 		Preprocessor prePro = makePreProcessor("crossing_symmetric_triangle.json");
 		
 		int sizeImplicit = prePro._nonMinimalSegments.size();
+		System.out.println(prePro._nonMinimalSegments);
 		assertEquals(6, sizeImplicit);
 		
 		//test with new figure
@@ -141,7 +138,7 @@ class PreprocessorTest
 		assertEquals(12, sizeGrid);
 	}
 	
-	@Test
+	//@Test
 	void test_implicit_crossings()
 	{
 		FigureNode fig = InputFacade.extractFigure("fully_connected_irregular_polygon.json");

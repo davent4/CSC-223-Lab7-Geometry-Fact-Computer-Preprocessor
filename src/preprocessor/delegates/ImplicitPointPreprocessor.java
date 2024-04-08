@@ -16,6 +16,7 @@ public class ImplicitPointPreprocessor
 	 * points and name them.
 	 * 
 	 */
+	//TODO must we make implicitPoints a PointDatabase (to name the points) or leave as a Set<Point>?
 	public static Set<Point> compute(PointDatabase givenPoints, List<Segment> givenSegments) 
 	{
 		Set<Point> implicitPoints = new LinkedHashSet<Point>();
