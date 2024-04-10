@@ -101,6 +101,7 @@ class PreprocessorTest
 		Preprocessor preStar = makePreProcessor("star.json");
 		
 		int sizeStar = preStar._allMinimalSegments.size();
+		System.out.println(preStar._allMinimalSegments);
 		assertEquals(15, sizeStar);
 		
 		//test with figure without implicit points
@@ -184,7 +185,6 @@ class PreprocessorTest
 		// There are 15 implied segments inside the pentagon; see figure above
 		//
 		Set<Segment> iSegments = pp.computeImplicitBaseSegments(iPoints);
-		System.out.println(iSegments.size());
 		assertEquals(15, iSegments.size());
 
 		List<Segment> expectedISegments = new ArrayList<Segment>();

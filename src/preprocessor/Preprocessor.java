@@ -105,7 +105,7 @@ public class Preprocessor
 	{
 		Set<Segment> impSegments = new HashSet<Segment>();		
 
-		for(Segment segment:_givenSegments)
+		for(Segment segment : _givenSegments)
 		{
 			SortedSet<Point> pointsOnLine = new TreeSet<Point>();
 
@@ -169,12 +169,16 @@ public class Preprocessor
 													  Set<Segment> minimalImpSegments)
 	{
 		Set<Segment> minimal = new HashSet<Segment>(minimalImpSegments);
+		Set<Point> allPoints = new HashSet<Point>();
+		for(Point p : _pointDatabase) {	//TODO make pointDatabase iterable
+			allPoints.add(p);
+		}
 
 		//checks if any given segments are minimal by checking if the endpoints
 		//are the only two points on the line
 		for(Segment currSegment : givenSegments)
 		{
-			if(currSegment.collectOrderedPointsOnSegment(impPoints).size() == 0)
+			if(currSegment.collectOrderedPointsOnSegment(allPoints).size() == 0)
 			{
 				minimal.add(currSegment);
 			}
