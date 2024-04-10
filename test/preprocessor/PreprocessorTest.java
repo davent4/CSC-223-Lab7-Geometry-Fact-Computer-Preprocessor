@@ -117,7 +117,7 @@ class PreprocessorTest
 		
 		int sizeImplicit = prePro._nonMinimalSegments.size();
 		System.out.println(prePro._nonMinimalSegments);
-		assertEquals(6, sizeImplicit);
+		assertEquals(4, sizeImplicit);
 		
 		//test with new figure
 		Preprocessor square = makePreProcessor("box_with_two_lines.json");
@@ -135,10 +135,10 @@ class PreprocessorTest
 		Preprocessor preGrid = makePreProcessor("grid.json");
 		
 		int sizeGrid = preGrid._nonMinimalSegments.size();
-		assertEquals(12, sizeGrid);
+		assertEquals(6, sizeGrid);
 	}
 	
-	//@Test
+	@Test
 	void test_implicit_crossings()
 	{
 		FigureNode fig = InputFacade.extractFigure("fully_connected_irregular_polygon.json");

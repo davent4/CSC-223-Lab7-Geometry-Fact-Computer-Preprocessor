@@ -207,7 +207,7 @@ public class Preprocessor
 				if(combined != null)
 				{
 					nonMinimalSegs.add(combined); 
-					if(!segmentBuilding.contains(new Segment(combined.getPoint2(), combined.getPoint1())));
+					if(!segmentBuilding.contains(combined));
 					//if(!minimalSegs.contains(combined))
 					{
 						segmentBuilding.add(combined);
@@ -242,16 +242,11 @@ public class Preprocessor
 	// If both criteria are satisfied we have a new segment.
 	private Segment combineToNewSegment(Segment left, Segment right)
 	{
-		if(left.coincideWithoutOverlap(right))
-		{
-			if( left.sharedVertex(right) != null)
-			{
-				if(left.getPoint1().equals(right.getPoint1())) return new Segment(left.getPoint2(), right.getPoint2());
-				if(left.getPoint1().equals(right.getPoint2())) return new Segment(left.getPoint2(), right.getPoint1());
-				if(left.getPoint2().equals(right.getPoint1())) return new Segment(left.getPoint1(), right.getPoint2());
-				if(left.getPoint2().equals(right.getPoint2())) return new Segment(left.getPoint1(), right.getPoint1());
-			}
-		}
-		return null;
+		Point sharedVertex =  left.sharedVertex(right);
+		if(sharedVertex == null) return null;
+		if(! left.isCollinearWith(right)) return null;
+		if(left.HasSubSegment(right) || right.HasSubSegment(left)) return null;
+		
+		return new Segment(left.other(sharedVertex), right.other(sharedVertex));
 	}
 }
