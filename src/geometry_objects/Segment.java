@@ -161,6 +161,7 @@ public class Segment extends GeometricObject
 	 * Note: the segment MAY share an endpoint
 	 * coincide means to be on the same infinite line
 	 */
+	//this doesn't work.
 	public boolean coincideWithoutOverlap(Segment that)
 	{
 		//check collinearity

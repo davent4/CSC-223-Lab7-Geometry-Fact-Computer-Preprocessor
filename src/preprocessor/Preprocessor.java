@@ -105,7 +105,7 @@ public class Preprocessor
 	{
 		Set<Segment> impSegments = new HashSet<Segment>();		
 
-		for(Segment segment:_givenSegments)
+		for(Segment segment : _givenSegments)
 		{
 			SortedSet<Point> pointsOnLine = new TreeSet<Point>();
 
@@ -118,11 +118,11 @@ public class Preprocessor
 				}
 			}
 			//if a point was added: keeps only implicitMinSegs vs all minSegs
-//						if(pointsOnLine.size() != 0)
-//						{
-			pointsOnLine.add(segment.getPoint1());
-			pointsOnLine.add(segment.getPoint2());
-//						}
+			if(pointsOnLine.size() != 0)
+			{
+				pointsOnLine.add(segment.getPoint1());
+				pointsOnLine.add(segment.getPoint2());
+			}
 
 			//makes segment list from all points on the line
 			impSegments.addAll(makeSegments(pointsOnLine));
@@ -169,12 +169,16 @@ public class Preprocessor
 			Set<Segment> minimalImpSegments)
 	{
 		Set<Segment> minimal = new HashSet<Segment>(minimalImpSegments);
+		Set<Point> allPoints = new HashSet<Point>();
+		for(Point p : _pointDatabase) {	//TODO make pointDatabase iterable
+			allPoints.add(p);
+		}
 
 		//checks if any given segments are minimal by checking if the endpoints
 		//are the only two points on the line
 		for(Segment currSegment : givenSegments)
 		{
-			if(currSegment.collectOrderedPointsOnSegment(impPoints).size() == 0)
+			if(currSegment.collectOrderedPointsOnSegment(allPoints).size() == 0)
 			{
 				minimal.add(currSegment);
 			}
@@ -207,7 +211,7 @@ public class Preprocessor
 				if(combined != null)
 				{
 					nonMinimalSegs.add(combined); 
-					if(!segmentBuilding.contains(new Segment(combined.getPoint2(), combined.getPoint1())));
+					if(!segmentBuilding.contains(combined));
 					//if(!minimalSegs.contains(combined))
 					{
 						segmentBuilding.add(combined);								}
@@ -241,16 +245,11 @@ public class Preprocessor
 	// If both criteria are satisfied we have a new segment.
 	private Segment combineToNewSegment(Segment left, Segment right)
 	{
-		if(left.coincideWithoutOverlap(right))
-		{
-			if( left.sharedVertex(right) != null)
-			{
-				if(left.getPoint1().equals(right.getPoint1())) return new Segment(left.getPoint2(), right.getPoint2());
-				if(left.getPoint1().equals(right.getPoint2())) return new Segment(left.getPoint2(), right.getPoint1());
-				if(left.getPoint2().equals(right.getPoint1())) return new Segment(left.getPoint1(), right.getPoint2());
-				if(left.getPoint2().equals(right.getPoint2())) return new Segment(left.getPoint1(), right.getPoint1());
-			}
-		}
-		return null;
+		Point sharedVertex =  left.sharedVertex(right);
+		if(sharedVertex == null) return null;
+		if(! left.isCollinearWith(right)) return null;
+		if(left.HasSubSegment(right) || right.HasSubSegment(left)) return null;
+		
+		return new Segment(left.other(sharedVertex), right.other(sharedVertex));
 	}
 }

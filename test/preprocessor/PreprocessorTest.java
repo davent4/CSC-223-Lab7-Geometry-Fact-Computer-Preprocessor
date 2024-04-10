@@ -62,7 +62,7 @@ class PreprocessorTest
 		Preprocessor prePro = makePreProcessor("crossing_symmetric_triangle.json");
 		
 		int sizeImplicit = prePro._implicitSegments.size();
-		assertEquals(10, sizeImplicit);
+		assertEquals(4, sizeImplicit);
 		
 		//test with new figure
 		Preprocessor square = makePreProcessor("box_with_two_lines.json");
@@ -80,7 +80,7 @@ class PreprocessorTest
 		Preprocessor preGrid = makePreProcessor("grid.json");
 		
 		int sizeGrid = preGrid._implicitSegments.size();
-		assertEquals(12, sizeGrid);
+		assertEquals(0, sizeGrid);
 	}
 	
 	@Test
@@ -101,6 +101,7 @@ class PreprocessorTest
 		Preprocessor preStar = makePreProcessor("star.json");
 		
 		int sizeStar = preStar._allMinimalSegments.size();
+		System.out.println(preStar._allMinimalSegments);
 		assertEquals(15, sizeStar);
 		
 		//test with figure without implicit points
@@ -116,8 +117,7 @@ class PreprocessorTest
 		Preprocessor prePro = makePreProcessor("crossing_symmetric_triangle.json");
 		
 		int sizeImplicit = prePro._nonMinimalSegments.size();
-		System.out.println(prePro._nonMinimalSegments);
-		assertEquals(6, sizeImplicit);
+		assertEquals(4, sizeImplicit);
 		
 		//test with new figure
 		Preprocessor square = makePreProcessor("box_with_two_lines.json");
@@ -136,13 +136,14 @@ class PreprocessorTest
 		System.out.println(preStar._nonMinimalSegments.toString());
 
 		int sizeStar = preStar._nonMinimalSegments.size();
-		assertEquals(5, sizeStar);
-//		
-//		//test with figure without implicit points
-//		Preprocessor preGrid = makePreProcessor("grid.json");
-//		
-//		int sizeGrid = preGrid._nonMinimalSegments.size();
-//		assertEquals(12, sizeGrid);
+		
+		assertEquals(15, sizeStar);
+		
+		//test with figure without implicit points
+		Preprocessor preGrid = makePreProcessor("grid.json");
+		
+		int sizeGrid = preGrid._nonMinimalSegments.size();
+		assertEquals(6, sizeGrid);
 	}
 	
 	@Test
@@ -162,7 +163,7 @@ class PreprocessorTest
 		Set<Point> iPoints = ImplicitPointPreprocessor.compute(points, new ArrayList<Segment>(segments));
 		assertEquals(5, iPoints.size());
 
-		System.out.println(iPoints);
+		//System.out.println(iPoints);
 
 		//
 		//
@@ -176,11 +177,11 @@ class PreprocessorTest
 		//
 		//		    An irregular pentagon with 5 C 2 = 10 segments
 
-		Point a_star = new Point(56.0 / 15, 28.0 / 15);
-		Point b_star = new Point(16.0 / 7, 8.0 / 7);
-		Point c_star = new Point(8.0 / 9, 56.0 / 27);
-		Point d_star = new Point(90.0 / 59, 210.0 / 59);
-		Point e_star = new Point(194.0 / 55, 182.0 / 55);
+		Point a_star = new Point(56.0 / 15, 28.0 / 15); 	//*_F 
+		Point b_star = new Point(16.0 / 7, 8.0 / 7);		//*_G
+		Point c_star = new Point(8.0 / 9, 56.0 / 27);		//*_H
+		Point d_star = new Point(90.0 / 59, 210.0 / 59);	//*_I
+		Point e_star = new Point(194.0 / 55, 182.0 / 55);	//*_J
 
 		assertTrue(iPoints.contains(a_star));
 		assertTrue(iPoints.contains(b_star));

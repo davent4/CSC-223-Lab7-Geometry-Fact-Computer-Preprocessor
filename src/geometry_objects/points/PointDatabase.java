@@ -33,6 +33,14 @@ public class PointDatabase {
 	 * @return void
 	 **/
 	public void put(String name, double x, double y) { _factory.put(name, x, y); }
+	
+	/**
+	 * Adds a point to the database.
+	 * @param Point n
+	 * @return void
+	 **/
+	public void put(Point n) { _factory.put(n); }
+
 
 	/**
 	 * Determines if a point is named based off of a specified pair of coordinates.
