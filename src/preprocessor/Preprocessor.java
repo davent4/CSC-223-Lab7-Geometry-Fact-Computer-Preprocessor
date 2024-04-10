@@ -118,11 +118,11 @@ public class Preprocessor
 				}
 			}
 			//if a point was added: keeps only implicitMinSegs vs all minSegs
-//			if(pointsOnLine.size() != 0)
-//			{
-				pointsOnLine.add(segment.getPoint1());
-				pointsOnLine.add(segment.getPoint2());
-//			}
+//						if(pointsOnLine.size() != 0)
+//						{
+			pointsOnLine.add(segment.getPoint1());
+			pointsOnLine.add(segment.getPoint2());
+//						}
 
 			//makes segment list from all points on the line
 			impSegments.addAll(makeSegments(pointsOnLine));
@@ -165,8 +165,8 @@ public class Preprocessor
 	 * @return -- a 
 	 */
 	protected Set<Segment> identifyAllMinimalSegments(Set<Point> impPoints,
-													  Set<Segment> givenSegments,
-													  Set<Segment> minimalImpSegments)
+							Set<Segment> givenSegments,
+			Set<Segment> minimalImpSegments)
 	{
 		Set<Segment> minimal = new HashSet<Segment>(minimalImpSegments);
 
@@ -192,7 +192,7 @@ public class Preprocessor
 	 */
 	public Set<Segment> constructAllNonMinimalSegments(Set<Segment> minimalSegs)
 	{
-		Set<Segment> nonMinimalSegs = new HashSet<Segment>();
+		Set<Segment> nonMinimalSegs = new HashSet<Segment>(minimalSegs);
 
 		Queue<Segment> segmentBuilding = new LinkedList<Segment>(minimalSegs);
 
@@ -210,8 +210,7 @@ public class Preprocessor
 					if(!segmentBuilding.contains(new Segment(combined.getPoint2(), combined.getPoint1())));
 					//if(!minimalSegs.contains(combined))
 					{
-						segmentBuilding.add(combined);
-					}
+						segmentBuilding.add(combined);								}
 				}
 			}
 		}
