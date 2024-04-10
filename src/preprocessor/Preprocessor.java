@@ -118,11 +118,11 @@ public class Preprocessor
 				}
 			}
 			//if a point was added: keeps only implicitMinSegs vs all minSegs
-//			if(pointsOnLine.size() != 0)
-//			{
+			if(pointsOnLine.size() != 0)
+			{
 				pointsOnLine.add(segment.getPoint1());
 				pointsOnLine.add(segment.getPoint2());
-//			}
+			}
 
 			//makes segment list from all points on the line
 			impSegments.addAll(makeSegments(pointsOnLine));
