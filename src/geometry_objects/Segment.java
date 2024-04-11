@@ -172,10 +172,10 @@ public class Segment extends GeometricObject
 	public boolean coincideWithoutOverlap(Segment that)
 	{
 		//check collinearity
-		if (!(LineDelegate.areCollinear(this, that))) return false;
+		if (!(isCollinearWith(that))) return false;
 
 		//check for parallel
-		if(!(LineDelegate.areCollinear(this, new Segment(_point1, that.getPoint1())))) return false;
+		if(!(isCollinearWith(new Segment(getPoint1(), that.getPoint1())))) return false;
 
 		Point sharedVertex = sharedVertex(that);
 
@@ -188,7 +188,7 @@ public class Segment extends GeometricObject
 				   !SegmentDelegate.pointLiesBetweenEndpoints(that, this.getPoint2());
 		}
 		
-		//may need to adjust
+		//checks if nonendpoint is on the line
 		if (SegmentDelegate.pointLiesBetweenEndpoints(this, that.other(sharedVertex)) || 
 			SegmentDelegate.pointLiesBetweenEndpoints(that, other(sharedVertex))) return false;
 		
