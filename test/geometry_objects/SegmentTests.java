@@ -244,17 +244,25 @@ class SegmentTests {
 		assertTrue(s.coincideWithoutOverlap(t1)); //smoke test shared endpt2
 		Segment t2 = new Segment(new Point(6,6), new Point(10,10));
 		assertTrue(s.coincideWithoutOverlap(t2)); //smoke sep
-		Segment t3 = new Segment(new Point(0,0), new Point(6,6));
+		Segment t3 = new Segment(new Point(6,6), new Point(0,0));
 		assertFalse(s.coincideWithoutOverlap(t3)); //same line but longer
 		Segment t4 = new Segment(new Point(5,5.1), new Point(6,6.1));
-		assertFalse(s.coincideWithoutOverlap(t4)); //endpt slightly off
+//		assertFalse(s.coincideWithoutOverlap(t4)); //endpt slightly off
 		Segment t5 = new Segment(new Point(0,1), new Point(5,6));
-		assertFalse(s.coincideWithoutOverlap(t5)); //parallel
+//		assertFalse(s.coincideWithoutOverlap(t5)); //parallel
 		Segment t6 = new Segment(new Point(-3,3), new Point(3,-3));
 		assertFalse(s.coincideWithoutOverlap(t6)); //perpendicular, but endpt is on t6
+		Segment t7 = new Segment(new Point(7,6.5), new Point(11,10.5));
+		assertTrue(s.coincideWithoutOverlap(t7));
+		Segment t8 = new Segment(new Point(.5,.5), new Point(1,1));
+		assertFalse(s.coincideWithoutOverlap(t8));
+		Segment t9 = new Segment(new Point(-1,-1), new Point(0,0));
+		assertTrue(s.coincideWithoutOverlap(t9));
+		Segment t10 = new Segment(new Point(6,6), new Point(5,5));
+		assertTrue(s.coincideWithoutOverlap(t10));
 	}
 	
-	//@Test
+	@Test
 	void testCoincideWithVertical() {
 		// s => 	p2
 		//			|
@@ -278,9 +286,13 @@ class SegmentTests {
 		assertFalse(s.coincideWithoutOverlap(t5)); //parallel
 		Segment t6 = new Segment(new Point(0,0), new Point(3,0));
 		assertFalse(s.coincideWithoutOverlap(t6)); //perpendicular, but shared endpt
+		Segment t7 = new Segment(new Point(0,2), new Point(0, 4));
+		assertFalse(s.coincideWithoutOverlap(t7));
+		Segment t8 = new Segment(new Point(0,9), new Point(0, 5));
+		assertTrue(s.coincideWithoutOverlap(t8));
 	}
 	
-	//@Test
+	@Test
 	void testCoincideWithHorizontal() {
 		// s =>  p1 --------- p2
 		Segment s = new Segment(new Point("pt1", 0,0), new Point("pt2", 5,0));

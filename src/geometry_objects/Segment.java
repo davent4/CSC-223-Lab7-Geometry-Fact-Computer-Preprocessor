@@ -72,13 +72,13 @@ public class Segment extends GeometricObject
 	public boolean HasSubSegment(Segment candidate)
 	{
 		//checks whether the endpoints of candidate are on this segment
-        return (SegmentDelegate.pointLiesOnSegment(this, candidate.getPoint1())) 
-        	&& (SegmentDelegate.pointLiesOnSegment(this, candidate.getPoint2()));	
-    }
+		return (SegmentDelegate.pointLiesOnSegment(this, candidate.getPoint1())) 
+				&& (SegmentDelegate.pointLiesOnSegment(this, candidate.getPoint2()));	
+	}
 
 	/**
 	 * Determines if this segment and that segment share an endpoint
-	 
+
 	 * @param s -- a segment
 
 	 * @return the shared endpoint
@@ -99,7 +99,7 @@ public class Segment extends GeometricObject
 	public boolean equals(Object obj)
 	{
 		if (obj == null) return false;
-		
+
 		if (!(obj instanceof Segment)) return false;
 		Segment that = (Segment)obj;
 
@@ -153,7 +153,7 @@ public class Segment extends GeometricObject
 	 * True case:
 	 *                    this                  that
 	 *             ----------------           ===========
-     *
+	 *
 	 * True case:
 	 *                    this    that
 	 *             |----------|==========|     
@@ -161,46 +161,44 @@ public class Segment extends GeometricObject
 	 * Note: the segment MAY share an endpoint
 	 * coincide means to be on the same infinite line
 	 */
-	//this doesn't work.
+
+	//this doesn't work. ORIGINAL
+//		public boolean coincideWithoutOverlap(Segment that)
+//		{
+//			//check collinearity
+//			if (!(LineDelegate.areCollinear(this, that))) return false;
+//			
+//			//check for shared endpoint
+//			if (_point1.equals(that.getPoint2()) ||	
+//				_point2.equals(that.getPoint1()))  return true;
+//				
+//			//check for no overlap
+//			if (_point1.getX() > that.getPoint2().getX() ||	
+//				_point2.getX() < that.getPoint1().getX() )	return true; 
+//						
+//	        return false;
+//		}
+
+	//TODO fix for parallel
 	public boolean coincideWithoutOverlap(Segment that)
 	{
 		//check collinearity
 		if (!(LineDelegate.areCollinear(this, that))) return false;
-		
-		//check for shared endpoint
-		if (_point1.equals(that.getPoint2()) ||	
-			_point2.equals(that.getPoint1()))	return true;
-		
-		//check for no overlap
-		if (_point1.getX() > that.getPoint2().getX() ||	
-			_point2.getX() < that.getPoint1().getX() )	return true; 
-		
-		if (this.isVertical() && that.isVertical())
+
+		Point sharedVertex = sharedVertex(that);
+
+		if (sharedVertex == null) 
 		{
-			//check for no overlap when line is vertical
-			if (_point1.getY() > that.getPoint2().getY() ||	
-				_point2.getY() < that.getPoint1().getY() )	return true;
+			return !SegmentDelegate.pointLiesBetweenEndpoints(this, that.getPoint1()) 
+					|| !SegmentDelegate.pointLiesBetweenEndpoints(this, that.getPoint2());
 		}
-		
-        return false;
+		//may need to adjust
+		if (GeometryUtilities.between(that.other(sharedVertex), sharedVertex,
+				other(sharedVertex)) || GeometryUtilities.between(other(sharedVertex), sharedVertex,
+						that.other(sharedVertex))) return false;
+		return true;
 	}
-	
-//	public boolean coincideWithoutOverlap(Segment that)
-//	{
-//		//check collinearity
-//		if (!(LineDelegate.areCollinear(this, that))) return false;
-//		
-//		//check for shared endpoint
-//		if (_point1.equals(that.getPoint2()) ||	
-//			_point2.equals(that.getPoint1()))	return true;
-//		
-//		//check each endpoint of that for overlap
-//		if(SegmentDelegate.pointLiesBetweenEndpoints(this, that.getPoint1())) return false;
-//		if(SegmentDelegate.pointLiesBetweenEndpoints(this, that.getPoint2())) return false;
-//		
-//        return true;
-//	}
-	
+
 	/**
 	 *   Example:
 	 *                             Q *
@@ -210,9 +208,9 @@ public class Segment extends GeometricObject
 	 *      * Z
 	 *
 	 *  Given:
-     *	    Segment(A, D) and points {A, B, C, D, E, Q, Z},
+	 *	    Segment(A, D) and points {A, B, C, D, E, Q, Z},
 	 *      this method will return the set {A, B, C, D} in this order
-     *      since it is lexicographically sorted.
+	 *      since it is lexicographically sorted.
 	 *
 	 *      Points Q, Z, and E are NOT on the segment.
 	 *
@@ -221,15 +219,15 @@ public class Segment extends GeometricObject
 	public SortedSet<Point> collectOrderedPointsOnSegment(Set<Point> points)
 	{
 		SortedSet<Point> pointsOn = new TreeSet<Point>();
-		
+
 		for(Point p : points)
 		{
 			if(SegmentDelegate.pointLiesOnSegment(this, p))	pointsOn.add(p);
 		}
-		
+
 		return pointsOn;
 	} 
-	
+
 	/**
 	 * returns object as a string
 	 */
