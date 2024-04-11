@@ -14,6 +14,10 @@ import org.junit.jupiter.api.Test;
 import geometry_objects.points.Point;
 import input.components.point.PointNode;
 import utilities.math.MathUtilities;
+/**
+* @author Della Avent, Ellie Johnson
+* @date 4/10/24
+*/
 
 class SegmentTests {
 
