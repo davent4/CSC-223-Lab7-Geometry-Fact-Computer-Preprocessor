@@ -103,16 +103,17 @@ public class Preprocessor
 	 */
 	protected Set<Segment> computeImplicitBaseSegments(Set<Point> impPoints)
 	{
-		Set<Segment> impSegments = new HashSet<Segment>();		
+		Set<Segment> impSegments = new HashSet<Segment>();	
+		Set<Point> givenPoints = _pointDatabase.getPoints();
 
 		for(Segment segment : _givenSegments)
 		{
 			SortedSet<Point> pointsOnLine = new TreeSet<Point>();
 
 			//checks if any implicit point is on the segment
-			for(Point point:impPoints)
+			for(Point point : givenPoints)
 			{
-				if(geometry_objects.delegates.SegmentDelegate.pointLiesOnSegment(segment, point))
+				if(segment.pointLiesBetweenEndpoints(point))
 				{
 					pointsOnLine.add(point);
 				}
@@ -169,21 +170,17 @@ public class Preprocessor
 			Set<Segment> minimalImpSegments)
 	{
 		Set<Segment> minimal = new HashSet<Segment>(minimalImpSegments);
-		Set<Point> allPoints = new HashSet<Point>();
-		for(Point p : _pointDatabase) {	//TODO make pointDatabase iterable
-			allPoints.add(p);
-		}
+		Set<Point> allPoints = _pointDatabase.getPoints();
 
 		//checks if any given segments are minimal by checking if the endpoints
 		//are the only two points on the line
 		for(Segment currSegment : givenSegments)
 		{
-			if(currSegment.collectOrderedPointsOnSegment(allPoints).size() == 0)
+			if(currSegment.collectOrderedPointsOnSegment(allPoints).size() == 2)
 			{
 				minimal.add(currSegment);
 			}
 		}
-		//TODO right now, this for loop does nothing bc all the minimal seg are already in impSeg
 
 		return minimal;
 	}
@@ -220,19 +217,6 @@ public class Preprocessor
 		}
 		return nonMinimalSegs;
 	}
-
-	//	private void constructAllNonMinimalSegments(Set<Segment> lastLevelSegs, List<Segment> minimalSegs, Set<Segment> nonMinimalSegs)
-	//	{
-	//		for(Segment segment:lastLevelSegs)
-	//		{
-	//			//while loop
-	//			for(Segment nextSegment:minimalSegs)
-	//			{
-	//				Segment combinedSegment = combineToNewSegment(segment, nextSegment);
-	//				if (!combinedSegment.equals(null)) nonMinimalSegs.add(combinedSegment);
-	//			}
-	//		}
-	//	}
 
 	//
 	// Our goal is to stitch together segments that are on the same line:

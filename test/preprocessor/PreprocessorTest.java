@@ -54,6 +54,9 @@ class PreprocessorTest
 		Preprocessor preGrid = makePreProcessor("grid.json");
 		int sizeGrid = preGrid._implicitPoints.size();
 		assertEquals(0, sizeGrid);
+		
+		Preprocessor preTriangle = makePreProcessor("triangle_with_two_lines.json");
+		assertEquals(0, preGrid._implicitPoints.size());
 	}
 	
 	@Test
@@ -81,6 +84,9 @@ class PreprocessorTest
 		
 		int sizeGrid = preGrid._implicitSegments.size();
 		assertEquals(0, sizeGrid);
+		
+		Preprocessor preTriangle = makePreProcessor("triangle_with_two_lines.json");
+		assertEquals(6, preTriangle._implicitSegments.size());
 	}
 	
 	@Test
@@ -101,14 +107,15 @@ class PreprocessorTest
 		Preprocessor preStar = makePreProcessor("star.json");
 		
 		int sizeStar = preStar._allMinimalSegments.size();
-		System.out.println(preStar._allMinimalSegments);
 		assertEquals(15, sizeStar);
 		
 		//test with figure without implicit points
 		Preprocessor preGrid = makePreProcessor("grid.json");
-		
 		int sizeGrid = preGrid._allMinimalSegments.size();
 		assertEquals(12, sizeGrid);
+		
+		Preprocessor preTriangle = makePreProcessor("triangle_with_two_lines.json");
+		assertEquals(9, preTriangle._allMinimalSegments.size());
 	}
 
 	@Test
@@ -141,9 +148,11 @@ class PreprocessorTest
 		
 		//test with figure without implicit points
 		Preprocessor preGrid = makePreProcessor("grid.json");
-		
 		int sizeGrid = preGrid._nonMinimalSegments.size();
 		assertEquals(6, sizeGrid);
+		
+		Preprocessor preTriangle = makePreProcessor("triangle_with_two_lines.json");
+		assertEquals(6, preTriangle._nonMinimalSegments.size());
 	}
 	
 	@Test

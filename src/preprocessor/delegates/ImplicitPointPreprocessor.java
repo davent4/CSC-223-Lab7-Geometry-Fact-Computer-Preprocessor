@@ -40,7 +40,7 @@ public class ImplicitPointPreprocessor
 					try {
 						implicitPoints.add(givenPoints.getPoint(impPoint));
 					} catch (NotInDatabaseException e) {
-
+						
 					} 
 				}
 				
