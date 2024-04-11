@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.SortedSet;
@@ -12,7 +11,6 @@ import java.util.SortedSet;
 import org.junit.jupiter.api.Test;
 
 import geometry_objects.points.Point;
-import input.components.point.PointNode;
 import utilities.math.MathUtilities;
 /**
 * @author Della Avent, Ellie Johnson
@@ -251,13 +249,13 @@ class SegmentTests {
 		Segment t3 = new Segment(new Point(6,6), new Point(0,0));
 		assertFalse(s.coincideWithoutOverlap(t3)); //same line but longer
 		Segment t4 = new Segment(new Point(5,5.1), new Point(6,6.1));
-//		assertFalse(s.coincideWithoutOverlap(t4)); //endpt slightly off
+		assertFalse(s.coincideWithoutOverlap(t4)); //endpt slightly off
 		Segment t5 = new Segment(new Point(0,1), new Point(5,6));
-//		assertFalse(s.coincideWithoutOverlap(t5)); //parallel
+		assertFalse(s.coincideWithoutOverlap(t5)); //parallel
 		Segment t6 = new Segment(new Point(-3,3), new Point(3,-3));
 		assertFalse(s.coincideWithoutOverlap(t6)); //perpendicular, but endpt is on t6
 		Segment t7 = new Segment(new Point(7,6.5), new Point(11,10.5));
-		assertTrue(s.coincideWithoutOverlap(t7));
+		assertFalse(s.coincideWithoutOverlap(t7));
 		Segment t8 = new Segment(new Point(.5,.5), new Point(1,1));
 		assertFalse(s.coincideWithoutOverlap(t8));
 		Segment t9 = new Segment(new Point(-1,-1), new Point(0,0));

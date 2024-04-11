@@ -169,28 +169,13 @@ public class Segment extends GeometricObject
 	 * coincide means to be on the same infinite line
 	 */
 
-	//this doesn't work. ORIGINAL
-//		public boolean coincideWithoutOverlap(Segment that)
-//		{
-//			//check collinearity
-//			if (!(LineDelegate.areCollinear(this, that))) return false;
-//			
-//			//check for shared endpoint
-//			if (_point1.equals(that.getPoint2()) ||	
-//				_point2.equals(that.getPoint1()))  return true;
-//				
-//			//check for no overlap
-//			if (_point1.getX() > that.getPoint2().getX() ||	
-//				_point2.getX() < that.getPoint1().getX() )	return true; 
-//						
-//	        return false;
-//		}
-
-	//TODO fix for parallel
 	public boolean coincideWithoutOverlap(Segment that)
 	{
 		//check collinearity
 		if (!(LineDelegate.areCollinear(this, that))) return false;
+
+		//check for parallel
+		if(!(LineDelegate.areCollinear(this, new Segment(_point1, that.getPoint1())))) return false;
 
 		Point sharedVertex = sharedVertex(that);
 
