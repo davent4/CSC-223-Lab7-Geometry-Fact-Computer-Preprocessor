@@ -193,7 +193,7 @@ public class Preprocessor
 	 */
 	public Set<Segment> constructAllNonMinimalSegments(Set<Segment> minimalSegs)
 	{
-		Set<Segment> nonMinimalSegs = new HashSet<Segment>(minimalSegs);
+		Set<Segment> nonMinimalSegs = new HashSet<Segment>();
 
 		Queue<Segment> segmentBuilding = new LinkedList<Segment>(minimalSegs);
 
@@ -204,14 +204,13 @@ public class Preprocessor
 			for(Segment segment : minimalSegs)
 			{
 				Segment combined = combineToNewSegment(minimal, segment);
-				//creates BD when given AD and AB
 				if(combined != null)
 				{
 					nonMinimalSegs.add(combined); 
-					if(!segmentBuilding.contains(combined));
-					//if(!minimalSegs.contains(combined))
+					if(!segmentBuilding.contains(combined))
 					{
-						segmentBuilding.add(combined);								}
+						segmentBuilding.add(combined);
+					}
 				}
 			}
 		}

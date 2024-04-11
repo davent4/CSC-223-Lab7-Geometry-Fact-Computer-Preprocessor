@@ -55,36 +55,34 @@ class PreprocessorTest
 		int sizeGrid = preGrid._implicitPoints.size();
 		assertEquals(0, sizeGrid);
 		
+		//this figure has given points that act as implicit one of the other segments
 		Preprocessor preTriangle = makePreProcessor("triangle_with_two_lines.json");
-		assertEquals(0, preGrid._implicitPoints.size());
+		assertEquals(0, preTriangle._implicitPoints.size());
 	}
 	
 	@Test
 	void test_implicit_Segments()
 	{
 		Preprocessor prePro = makePreProcessor("crossing_symmetric_triangle.json");
-		
 		int sizeImplicit = prePro._implicitSegments.size();
 		assertEquals(4, sizeImplicit);
 		
 		//test with new figure
 		Preprocessor square = makePreProcessor("box_with_two_lines.json");
-		
 		int sizeSquare = square._implicitSegments.size();
 		assertEquals(16, sizeSquare);	
 		
 		//test with new figure
 		Preprocessor preStar = makePreProcessor("star.json");
-		
 		int sizeStar = preStar._implicitSegments.size();
 		assertEquals(15, sizeStar);
 		
 		//test with figure without implicit points
 		Preprocessor preGrid = makePreProcessor("grid.json");
-		
 		int sizeGrid = preGrid._implicitSegments.size();
 		assertEquals(0, sizeGrid);
 		
+		//this figure has given points that act as implicit one of the other segments
 		Preprocessor preTriangle = makePreProcessor("triangle_with_two_lines.json");
 		assertEquals(6, preTriangle._implicitSegments.size());
 	}
@@ -93,19 +91,16 @@ class PreprocessorTest
 	void test_allMinimal_Segments()
 	{
 		Preprocessor prePro = makePreProcessor("crossing_symmetric_triangle.json");
-		
 		int sizeImplicit = prePro._allMinimalSegments.size();
 		assertEquals(10, sizeImplicit);
 		
 		//test with new figure
 		Preprocessor square = makePreProcessor("box_with_two_lines.json");
-		
 		int sizeSquare = square._allMinimalSegments.size();
 		assertEquals(16, sizeSquare);	
 		
 		//test with new figure
 		Preprocessor preStar = makePreProcessor("star.json");
-		
 		int sizeStar = preStar._allMinimalSegments.size();
 		assertEquals(15, sizeStar);
 		
@@ -114,6 +109,7 @@ class PreprocessorTest
 		int sizeGrid = preGrid._allMinimalSegments.size();
 		assertEquals(12, sizeGrid);
 		
+		//this figure has given points that act as implicit one of the other segments
 		Preprocessor preTriangle = makePreProcessor("triangle_with_two_lines.json");
 		assertEquals(9, preTriangle._allMinimalSegments.size());
 	}
@@ -122,28 +118,17 @@ class PreprocessorTest
 	void test_allNonMinimal_Segments()
 	{
 		Preprocessor prePro = makePreProcessor("crossing_symmetric_triangle.json");
-		
 		int sizeImplicit = prePro._nonMinimalSegments.size();
 		assertEquals(4, sizeImplicit);
 		
 		//test with new figure
 		Preprocessor square = makePreProcessor("box_with_two_lines.json");
-		
 		int sizeSquare = square._nonMinimalSegments.size();
 		assertEquals(16, sizeSquare);	
-		
-//		//test with new figure
-//		Preprocessor square = makePreProcessor("box_with_two_lines.json");
-//		
-//		int sizeSquare = square._nonMinimalSegments.size();
-//		assertEquals(6, sizeSquare);	
-//		
+	
 		//test with new figure
 		Preprocessor preStar = makePreProcessor("star.json");
-		System.out.println(preStar._nonMinimalSegments.toString());
-
 		int sizeStar = preStar._nonMinimalSegments.size();
-		
 		assertEquals(15, sizeStar);
 		
 		//test with figure without implicit points
@@ -151,6 +136,7 @@ class PreprocessorTest
 		int sizeGrid = preGrid._nonMinimalSegments.size();
 		assertEquals(6, sizeGrid);
 		
+		//this figure has given points that act as implicit one of the other segments
 		Preprocessor preTriangle = makePreProcessor("triangle_with_two_lines.json");
 		assertEquals(6, preTriangle._nonMinimalSegments.size());
 	}
