@@ -11,6 +11,13 @@ import geometry_objects.points.Point;
 import utilities.math.MathUtilities;
 import utilities.math.analytic_geometry.GeometryUtilities;
 
+/**
+ * an class representing and undirected segment (a finite section of an infinite line)
+ * 
+ * @author Dr. C Alvin, Della Avent, Ellie Johnson
+ * @date 4/10/24
+ */
+
 public class Segment extends GeometricObject
 {
 	protected Point _point1;

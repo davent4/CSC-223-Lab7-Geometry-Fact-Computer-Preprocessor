@@ -14,6 +14,17 @@ import geometry_objects.points.PointDatabase;
 import preprocessor.delegates.ImplicitPointPreprocessor;
 import geometry_objects.Segment;
 
+/**
+ * given a set of Points and a set of Segment, creates:
+ * 		a set of implicit points, 
+ * 		segments created by those points, 
+ * 		a set of all minimal segments
+ * 		a set of all non-minimal segments
+ * 
+ * @author Dr. C Alvin, Della Avent, Ellie Johnson
+ * @date 4/10/24
+ */
+
 public class Preprocessor
 {
 	// The explicit points provided to us by the user.
@@ -85,8 +96,8 @@ public class Preprocessor
 		//
 		// Combine minimal and non-minimal into one package: our database
 		//
-//		_allMinimalSegments.forEach((segment) -> _segmentDatabase.put(segment, segment));
-//		_nonMinimalSegments.forEach((segment) -> _segmentDatabase.put(segment, segment));
+		_allMinimalSegments.forEach((segment) -> _segmentDatabase.put(segment, segment));
+		_nonMinimalSegments.forEach((segment) -> _segmentDatabase.put(segment, segment));
 	}
 
 	/**
@@ -186,8 +197,8 @@ public class Preprocessor
 	}
 
 	/**
-	 * Given a set of minimal segments, build non-minimal segments by appending
-	 * minimal segments (one at a time).
+	 * Given a set of minimal segments, build non-minimal segments by
+	 * attemping to append minimal segments (one at a time).
 	 * 
 	 * (Recursive construction of segments.)
 	 */
