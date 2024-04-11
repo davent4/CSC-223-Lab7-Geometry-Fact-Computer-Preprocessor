@@ -179,15 +179,19 @@ public class Segment extends GeometricObject
 
 		Point sharedVertex = sharedVertex(that);
 
+		//if there is no shared vertex the endpoints shouldn't be on the segment
 		if (sharedVertex == null) 
 		{
-			return !SegmentDelegate.pointLiesBetweenEndpoints(this, that.getPoint1()) 
-					|| !SegmentDelegate.pointLiesBetweenEndpoints(this, that.getPoint2());
+			return !SegmentDelegate.pointLiesBetweenEndpoints(this, that.getPoint1()) &&
+				   !SegmentDelegate.pointLiesBetweenEndpoints(this, that.getPoint2()) &&
+				   !SegmentDelegate.pointLiesBetweenEndpoints(that, this.getPoint1()) &&
+				   !SegmentDelegate.pointLiesBetweenEndpoints(that, this.getPoint2());
 		}
+		
 		//may need to adjust
-		if (GeometryUtilities.between(that.other(sharedVertex), sharedVertex,
-				other(sharedVertex)) || GeometryUtilities.between(other(sharedVertex), sharedVertex,
-						that.other(sharedVertex))) return false;
+		if (SegmentDelegate.pointLiesBetweenEndpoints(this, that.other(sharedVertex)) || 
+			SegmentDelegate.pointLiesBetweenEndpoints(that, other(sharedVertex))) return false;
+		
 		return true;
 	}
 

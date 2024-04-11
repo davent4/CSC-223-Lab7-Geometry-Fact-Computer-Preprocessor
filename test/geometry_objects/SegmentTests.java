@@ -262,6 +262,10 @@ class SegmentTests {
 		assertTrue(s.coincideWithoutOverlap(t9));
 		Segment t10 = new Segment(new Point(6,6), new Point(5,5));
 		assertTrue(s.coincideWithoutOverlap(t10));
+		Segment t11 = new Segment(new Point(6,6), new Point(1,1));
+		assertFalse(s.coincideWithoutOverlap(t11)); //overlap but no shared endpoints
+		Segment t12 = new Segment(new Point(6,6), new Point(-1.678,-1.678));
+		assertFalse(s.coincideWithoutOverlap(t12)); //overlap but no shared endpoints
 	}
 	
 	@Test
