@@ -224,6 +224,10 @@ public class Segment extends GeometricObject
 		return pointsOn;
 	} 
 
+	public boolean overlayAsRays(Segment that)
+	{
+		return false;
+	}
 	/**
 	 * returns object as a string
 	 */

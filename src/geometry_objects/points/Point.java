@@ -83,6 +83,13 @@ public class Point implements Comparable<Point>
 	            return 0;
 	    }
 	}
+	
+	public static double distance(Point first, Point second)
+	{
+		double changeX = Math.pow(first.getX() - second.getX(), 2);
+		double changeY = Math.pow(first.getY() - second.getY(), 2);
+		return Math.sqrt(changeX + changeY);
+	}
 
 	@Override
 	public int compareTo(Point that) {
