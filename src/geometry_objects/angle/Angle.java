@@ -27,6 +27,10 @@ public class Angle implements Comparable<Angle>
 	protected Point _vertex;
 	protected Point _ray2Endpoint;
 	
+	//added to get access to endpoints
+	public Point getRayEndpoint1() { return _ray1Endpoint; }
+	public Point getRayEndPoint2() { return _ray2Endpoint; }
+	
 	protected double _measure; 
 	public double getMeasure() { return _measure; }
 
@@ -128,7 +132,7 @@ public class Angle implements Comparable<Angle>
 
     /*
 	 * @param angle -- a angle
-	 * @return true / false whether the angle overlays one of the rays 
+	 * @return true / false whether the angle overlays one of the rays/is equivalent
 	 */
     public boolean overlays(Angle that)
     {
@@ -152,10 +156,10 @@ public class Angle implements Comparable<Angle>
     	Point shared = that.other(_vertex);
     	if (shared == null) return null;
 
-    	// Individual overlaying
-    	if (Segment.overlaysAsRay(_ray1, that)) return _ray1;
+    	// Individual overlaying - original method did not have point as parameter
+    	if (Segment.overlaysAsRay(_ray1, that, shared)) return _ray1;
     	
-    	if (Segment.overlaysAsRay(_ray2, that)) return _ray2;
+    	if (Segment.overlaysAsRay(_ray2, that, shared)) return _ray2;
 
     	// No overlaying segment
     	return null;
