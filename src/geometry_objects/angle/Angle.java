@@ -127,8 +127,8 @@ public class Angle implements Comparable<Angle>
 	}
 
     /*
-	 * @param ray -- a ray
-	 * @return true / false whether the @ray overlays one of this angle's rays 
+	 * @param angle -- a angle
+	 * @return true / false whether the angle overlays one of the rays 
 	 */
     public boolean overlays(Angle that)
     {

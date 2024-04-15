@@ -224,10 +224,23 @@ public class Segment extends GeometricObject
 		return pointsOn;
 	} 
 
-	public boolean overlayAsRays(Segment that)
+	/**
+	 * 
+	 * @param main segment 
+	 * @param segment we are checking is within other segment
+	 * @return true if segment two is on segment one
+	 */
+	public static boolean overlaysAsRay(Segment one, Segment two)
 	{
-		return false;
+		double slopeone = one.slope();
+		double slopetwo = two.slope();
+		
+		if(!utilities.math.MathUtilities.doubleEquals(slopeone, slopetwo)) return false;
+		
+		return one.pointLiesBetweenEndpoints(two.getPoint1()) &&
+			   one.pointLiesBetweenEndpoints(two.getPoint2());
 	}
+	
 	/**
 	 * returns object as a string
 	 */
