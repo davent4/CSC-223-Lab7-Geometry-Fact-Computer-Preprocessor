@@ -24,8 +24,8 @@ import utilities.eq_classes.EquivalenceClasses;
  */
 public class AngleEquivalenceClasses extends EquivalenceClasses<Angle>
 {
-	public AngleEquivalenceClasses(Comparator<Angle> comp) {
-		super(comp);
+	public AngleEquivalenceClasses() 
+	{
+		super(new AngleStructureComparator());
 	}	
-	
 }
