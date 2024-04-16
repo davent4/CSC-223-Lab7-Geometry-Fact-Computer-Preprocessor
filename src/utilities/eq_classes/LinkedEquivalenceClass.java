@@ -48,7 +48,7 @@ public class LinkedEquivalenceClass<T>
 	}
 	
 	/**
-	 * removes everything just from the LinkedList
+	 * removes everything that isn't the canonical 
 	 */
 	public void clearNonCanonical()
 	{

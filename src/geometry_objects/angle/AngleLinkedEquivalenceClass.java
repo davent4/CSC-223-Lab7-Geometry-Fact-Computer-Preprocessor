@@ -1,6 +1,9 @@
 package geometry_objects.angle;
 
+import java.util.Comparator;
+
 import geometry_objects.angle.comparators.AngleStructureComparator;
+import utilities.LinkedList;
 import utilities.eq_classes.LinkedEquivalenceClass;
 
 /**
@@ -25,5 +28,24 @@ import utilities.eq_classes.LinkedEquivalenceClass;
  */
 public class AngleLinkedEquivalenceClass extends LinkedEquivalenceClass<Angle>
 {
-    // TODO
+	public AngleLinkedEquivalenceClass() 
+	{
+		super(new AngleStructureComparator());
+	}
+	
+	@Override
+	/**
+	 * checks whether an element can be added, or "belongs"
+	 * @param element
+	 * @return True if element belongs; False otherwise 
+	 */
+	public boolean belongs(Angle element)
+	{	
+		if(isEmpty()) return false;
+		
+		if(element == null) return false;
+		
+		if(_comparator.compare(_canonical, element) == 0) return true;
+		return false;
+	}
 }
