@@ -10,7 +10,7 @@ import org.junit.Test;
 import geometry_objects.points.Point;
 import geometry_objects.points.PointDatabase;
 import input.components.exception.NotInDatabaseException;
-
+ 
 public class TestPointDatabase {
 
     @Test
