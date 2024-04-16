@@ -225,18 +225,18 @@ public class Segment extends GeometricObject
 	} 
 
 	/**
-	 * 
-	 * @param main segment with matching vertex
-	 * @param segment we are checking is within other segment
+	 * finds if the other end point of segment two is on the line of segment one
+	 * we know they share an end point based on the method call
+	 * @param one segment
+	 * @param second segment
 	 * @return true if segment two is on segment one
 	 */
-	public static boolean overlaysAsRay(Segment one, Segment two, Point vertex)
+	public static boolean overlaysAsRay(Segment one, Segment two)
 	{
-		double slopeone = one.slope();
-		double slopetwo = two.slope();
-		
-		if(!utilities.math.MathUtilities.doubleEquals(slopeone, slopetwo)) return false;
-		
+		//defines the vertex where the points intersect
+		Point vertex = one.segmentIntersection(two);
+
+		//returns whether or not the other end point is on one of the lines
 		return one.pointLiesBetweenEndpoints(two.other(vertex)) ||
 			   two.pointLiesBetweenEndpoints(one.other(vertex));
 	}

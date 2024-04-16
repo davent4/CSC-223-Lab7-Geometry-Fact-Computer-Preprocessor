@@ -163,9 +163,9 @@ public class Angle implements Comparable<Angle>
     	if (shared == null) return null;
 
     	// Individual overlaying - original method did not have point as parameter
-    	if (Segment.overlaysAsRay(_ray1, that, shared)) return _ray1;
+    	if (Segment.overlaysAsRay(_ray1, that)) return _ray1;
     	
-    	if (Segment.overlaysAsRay(_ray2, that, shared)) return _ray2;
+    	if (Segment.overlaysAsRay(_ray2, that)) return _ray2;
 
     	// No overlaying segment
     	return null;
