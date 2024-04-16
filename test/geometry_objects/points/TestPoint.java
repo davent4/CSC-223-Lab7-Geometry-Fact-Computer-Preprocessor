@@ -1,9 +1,10 @@
+package geometry_objects.points;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import geometry_objects.points.Point;
 
-class TestPoint {
+class TestPoint { 
 
 	@Test
 	public void testHashCode() {

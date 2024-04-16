@@ -1,3 +1,4 @@
+package geometry_objects.points;
 import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +15,7 @@ import input.components.exception.ParseException;
 /**
  * Test PointNamingFactory
  * @author Jackson Tedesco, Case Riddle, Della Avent
- * @data 3/25/2024
+ * @data 3/25/2024 
  */
 
 class TestPointNamingFactory {
