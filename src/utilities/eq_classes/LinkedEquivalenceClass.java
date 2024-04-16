@@ -168,14 +168,14 @@ public class LinkedEquivalenceClass<T>
 			return true;
 		}
 		
-		if(!(belongs(element))) return false;
 		//cannot add something if it does not belong
+		if(!(belongs(element))) return false;
 		
-		if(_canonical.equals(element)) return false; 
 		//if the canonical already equals the element
+		if(_canonical.equals(element)) return false; 
 		
-		if(contains(element)) _rest.remove(element); 
 		//no duplicates
+		if(contains(element)) _rest.remove(element);
 		
 		if(_canonical != null) _rest.addToBack(_canonical);
 		_canonical = element;

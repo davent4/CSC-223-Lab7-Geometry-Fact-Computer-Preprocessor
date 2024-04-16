@@ -33,19 +33,53 @@ public class AngleLinkedEquivalenceClass extends LinkedEquivalenceClass<Angle>
 		super(new AngleStructureComparator());
 	}
 	
-	@Override
+	
 	/**
 	 * checks whether an element can be added, or "belongs"
 	 * @param element
 	 * @return True if element belongs; False otherwise 
 	 */
+	@Override
 	public boolean belongs(Angle element)
 	{	
 		if(isEmpty()) return false;
 		
 		if(element == null) return false;
 		
-		if(_comparator.compare(_canonical, element) == 0) return true;
-		return false;
+		if(_comparator.compare(_canonical, element) == AngleStructureComparator.STRUCTURALLY_INCOMPARABLE) 
+			return false;
+		
+		return true;
+	}
+	
+	/**
+	 * Adds element to list
+	 * @param element
+	 * @return True if given element is added to list; False otherwise
+	 */
+	@Override
+	public boolean add(Angle element)
+	{	
+		//sets a canonical number
+		if(isEmpty()) 
+		{
+			if(element == null) return false;	
+			_canonical = element;
+			return true;
+		}
+		
+		//if the element is not added as the canonical
+		if(!belongs(element)) return false;
+		if(contains(element)) return false;
+		
+		//if the new angle is smaller than the canonical
+		if(_comparator.compare(_canonical, element) > 0)
+		{
+			demoteAndSetCanonical(element);
+			return true;
+		}
+		
+		_rest.addToBack(element);
+		return true;
 	}
 }
