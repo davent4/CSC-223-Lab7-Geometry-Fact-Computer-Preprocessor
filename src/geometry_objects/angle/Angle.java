@@ -71,6 +71,12 @@ public class Angle implements Comparable<Angle>
 		if (_measure <= 0) throw new FactException("Measure of " + this.toString() + " is ZERO");
 	}
 	
+	public Segment other(Segment ray)
+	{
+		if (ray.equals(getRay1())) return getRay2();
+		if (ray.equals(getRay2())) return getRay1();
+		return null;
+	}
 	/**
 	 * Find the measure of the angle (in radians) specified by the three points.
 	 * Uses Law of Cosines to compute angle
@@ -129,7 +135,7 @@ public class Angle implements Comparable<Angle>
 	{
 		return (int)(_measure - that._measure);
 	}
-
+	
     /*
 	 * @param angle -- a angle
 	 * @return true / false whether the angle overlays one of the rays/is equivalent
