@@ -60,46 +60,23 @@ public class AngleStructureComparator implements Comparator<Angle>
 	@Override
 	public int compare(Angle left, Angle right)
 	{
+		//conditions that mean it is not comparable structurally
 		Point vertex = left.getVertex();
-		if (vertex != right.getVertex()) return STRUCTURALLY_INCOMPARABLE;
+		if (!vertex.equals(right.getVertex())) 	return STRUCTURALLY_INCOMPARABLE;
+		if (!left.overlays(right)) 				return STRUCTURALLY_INCOMPARABLE;
 		
-		//can't be on same lines if angle is not equal
-		if (!MathUtilities.doubleEquals(left.getMeasure(), right.getMeasure())) return STRUCTURALLY_INCOMPARABLE;
+		//returns 0 if the rays are not able to be compared
+		if (left.getRay1().length() < right.getRay1().length() && 
+			left.getRay2().length() > right.getRay2().length())		 return 0;
 
-		//compares the segments of each angle
-		//TODO probably could be more efficient
-		Segment leftOpposite = null;
-		Segment rightOpposite = null;
-
-		//finds if there is a same segment and sets the opposite to compare
-		if(left.getRay1().equals(right.getRay1()) || left.getRay1().equals(right.getRay2()))  
-		{
-			leftOpposite = left.getRay2();
-			//finds the right segment that is the same
-			if(left.getRay1().equals(right.getRay1())) rightOpposite = right.getRay2();
-			else rightOpposite = right.getRay1();
-		}
-		//compares the second segment of the left given angle to the right rays
-		if(left.getRay2().equals(right.getRay1()) || left.getRay2().equals(right.getRay2()))  
-		{
-			leftOpposite = left.getRay2();
-			//finds the right segment that is the same
-			if(left.getRay2().equals(right.getRay2())) rightOpposite = right.getRay1();
-			else rightOpposite = right.getRay2();
-		}
-
-		//returns zero since there is no similarity
-		if (leftOpposite == null) return 0;
+		//add the total lengths of each angle
+		double leftLength = left.getRay1().length() + left.getRay2().length();
+		double rightLength = right.getRay1().length() + right.getRay2().length();
 		
-		//compares the distance of the opposite lines
-		double rayLeft = GeometryUtilities.distance(vertex, leftOpposite.other(vertex));
-		double rayRight = GeometryUtilities.distance(vertex, rightOpposite.other(vertex));
-
-		//returns if the first angle parameter is less than the second
-		//TODO is this how you compare doubles
-		if(rayLeft > rayRight) return 1;
+		//compare the lengths and return if left is the smaller angle
+		if (leftLength < rightLength) 	return -1;
 		
-		return -1;
+		return 1;
 	}
 }
 
