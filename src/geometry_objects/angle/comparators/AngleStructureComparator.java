@@ -61,10 +61,13 @@ public class AngleStructureComparator implements Comparator<Angle>
 	public int compare(Angle left, Angle right)
 	{
 		Point vertex = left.getVertex();
-		if (vertex != right.getVertex()) return 0;
+		if (vertex != right.getVertex()) return STRUCTURALLY_INCOMPARABLE;
+		
+		//can't be on same lines if angle is not equal
+		if (!MathUtilities.doubleEquals(left.getMeasure(), right.getMeasure())) return STRUCTURALLY_INCOMPARABLE;
 
 		//compares the segments of each angle
-		//probably could be more efficient
+		//TODO probably could be more efficient
 		Segment leftOpposite = null;
 		Segment rightOpposite = null;
 
@@ -94,9 +97,9 @@ public class AngleStructureComparator implements Comparator<Angle>
 
 		//returns if the first angle parameter is less than the second
 		//TODO is this how you compare doubles
-		if(rayLeft < rayRight) return -1;
+		if(rayLeft > rayRight) return 1;
 		
-		return 1;
+		return -1;
 	}
 }
 
