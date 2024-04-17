@@ -15,8 +15,9 @@ import geometry_objects.Segment;
 import geometry_objects.Triangle;
 import geometry_objects.points.Point;
 import geometry_objects.points.PointDatabase;
-import input.components.FigureNode;
+import components.FigureNode;
 import input.InputFacade;
+import input.components.exception.NotInDatabaseException;
 
 class TriangleIdentifierTest
 {
@@ -49,7 +50,7 @@ class TriangleIdentifierTest
 	// This figure contains 12 triangles
 	//
 	@Test
-	void test_crossing_symmetric_triangle()
+	void test_crossing_symmetric_triangle() throws NotInDatabaseException
 	{
 		init("crossing_symmetric_triangle.json");
 
