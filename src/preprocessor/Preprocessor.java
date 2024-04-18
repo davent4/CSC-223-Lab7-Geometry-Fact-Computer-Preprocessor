@@ -187,7 +187,7 @@ public class Preprocessor
 		//are the only two points on the line
 		for(Segment currSegment : givenSegments)
 		{
-			if(currSegment.collectOrderedPointsOnSegment(allPoints).size() == 2)
+			if(currSegment.collectOrderedPointsOnSegment(allPoints).size() == 2) //2 accounts for each endpoint
 			{
 				minimal.add(currSegment);
 			}

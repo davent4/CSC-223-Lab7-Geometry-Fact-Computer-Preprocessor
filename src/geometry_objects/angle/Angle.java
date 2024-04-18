@@ -148,13 +148,13 @@ public class Angle implements Comparable<Angle>
     	Segment overlays1 = overlayingRay(that._ray1);
     	Segment overlays2 = overlayingRay(that._ray2);
     	
-    	// Segment 1 and 2 do NOT align with that angle
+    	// Segment 1 and 2 do NOT align with that angle if one is null
     	return overlays1 != null && overlays2 != null;
     }
 	
     /*
 	 * @param ray -- a ray
-	 * @return true / false whether the @ray overlays one of this angle's rays 
+	 * @return the one of this angle's rays that overlaps with given Segment that
 	 */
     public Segment overlayingRay(Segment that)
     {

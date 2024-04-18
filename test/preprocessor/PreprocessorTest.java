@@ -54,6 +54,7 @@ class PreprocessorTest
 		//test with new figure	
 		Preprocessor preStar = makePreProcessor("star.json");
 		assertEquals(5, preStar._implicitPoints.size());
+		//System.out.println(preStar._implicitPoints);
 		
 		//test with figure without implicit points				
 		Preprocessor preGrid = makePreProcessor("grid.json");
