@@ -76,6 +76,7 @@ public class TriangleIdentifier
 		//whether this line of code is a good thing is yet to be seen
 		Set<Segment> segments = _segments.keySet();
 
+		//TODO this is n^3 and a problem
 		//tries to create a valid triangle from every combination of segments
 		for(Segment first : segments)
 		{

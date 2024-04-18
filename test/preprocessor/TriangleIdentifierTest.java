@@ -235,7 +235,7 @@ class TriangleIdentifierTest
 		//
 		// Implied points: 1 in this figure.
 		//
-		Point a_star = _points.getPoint(3,3);
+		Point a_star = _points.getPoint(2.5, 2.5);
 		
 		//
 		// Implied minimal segments: 4 in this figure.
@@ -244,6 +244,10 @@ class TriangleIdentifierTest
 		Segment a_star_b = new Segment(a_star, _points.getPoint("B"));
 		Segment a_star_c = new Segment(a_star, _points.getPoint("C"));
 		Segment a_star_d = new Segment(a_star, _points.getPoint("D"));
+		
+		//
+		// new non-minimal, computed segments: 0 in this figure. 
+		//
 
 		//
 		// Triangles we expect to find
@@ -271,11 +275,97 @@ class TriangleIdentifierTest
 	}
 	
 	@Test
-	void test_irregular_polygon() throws NotInDatabaseException
+	void test_triangle_with_lines() throws NotInDatabaseException
 	{
-		init("fully_connected_irregular_polygon.json");
+		init("triangle_with_two_lines.json");
 		TriangleIdentifier triIdentifier = new TriangleIdentifier(_segments);
 		Set<Triangle> computedTriangles = triIdentifier.getTriangles();
-		assertEquals(35, computedTriangles.size());
+		assertEquals(3, computedTriangles.size());
+
+		//
+		// ALL original segments: 5 in this figure.
+		//
+		Segment ad = new Segment(_points.getPoint("A"), _points.getPoint("D"));
+		Segment ag = new Segment(_points.getPoint("A"), _points.getPoint("G"));
+		Segment bf = new Segment(_points.getPoint("B"), _points.getPoint("F"));
+		Segment ce = new Segment(_points.getPoint("C"), _points.getPoint("E"));
+		Segment dg = new Segment(_points.getPoint("D"), _points.getPoint("G"));
+
+		//
+		// Implied points: 0 in this figure.
+		//
+		
+		//
+		// Implied minimal segments: 6 in this figure.
+		//
+		Segment ab = new Segment(_points.getPoint("A"), _points.getPoint("B"));
+		Segment bc = new Segment(_points.getPoint("B"), _points.getPoint("C"));
+		Segment cd = new Segment(_points.getPoint("C"), _points.getPoint("D"));
+		Segment de = new Segment(_points.getPoint("D"), _points.getPoint("E"));
+		Segment ef = new Segment(_points.getPoint("E"), _points.getPoint("F"));
+		Segment fg = new Segment(_points.getPoint("F"), _points.getPoint("G"));
+		
+		//
+		// new non-minimal, computed segments: 10 in this figure. (15 total)
+		//
+		
+		Segment ac = new Segment(_points.getPoint("A"), _points.getPoint("C"));
+		Segment bd = new Segment(_points.getPoint("B"), _points.getPoint("D"));
+		Segment df = new Segment(_points.getPoint("D"), _points.getPoint("F"));
+		Segment eg = new Segment(_points.getPoint("E"), _points.getPoint("G"));
+
+		//
+		// Triangles we expect to find
+		//
+		List<Triangle> expectedTriangles = new ArrayList<Triangle>();
+		try {
+			expectedTriangles.add(new Triangle(Arrays.asList(ag, ad, dg)));
+			expectedTriangles.add(new Triangle(Arrays.asList(bd, bf, df)));
+			expectedTriangles.add(new Triangle(Arrays.asList(cd, ce, de)));
+		}
+		catch (FactException te) { System.err.println("Invalid triangles in triangle test."); }
+
+		assertEquals(expectedTriangles.size(), computedTriangles.size());
+		
+		for (Triangle computedTriangle : computedTriangles)
+		{
+			assertTrue(expectedTriangles.contains(computedTriangle));
+		}
+	}
+	
+	@Test
+	void test_box_with_lines() throws NotInDatabaseException
+	{
+		init("box_with_two_lines.json");
+		TriangleIdentifier triIdentifier = new TriangleIdentifier(_segments);
+		Set<Triangle> computedTriangles = triIdentifier.getTriangles();
+		assertEquals(0, computedTriangles.size());
+	}
+	
+	@Test
+	void test_single_triangle() throws NotInDatabaseException
+	{
+		init("single_triangle.json");
+		TriangleIdentifier triIdentifier = new TriangleIdentifier(_segments);
+		Set<Triangle> computedTriangles = triIdentifier.getTriangles();
+		assertEquals(1, computedTriangles.size());
+	}
+	
+	@Test
+	void test_two_separate_triangles() throws NotInDatabaseException
+	{
+		init("two_separate_triangles.json");
+		TriangleIdentifier triIdentifier = new TriangleIdentifier(_segments);
+		Set<Triangle> computedTriangles = triIdentifier.getTriangles();
+		assertEquals(2, computedTriangles.size());
+	}
+	
+	@Test
+	void test_triangle_with_three_inside() throws NotInDatabaseException
+	{
+		init("triangle_with_three_triangles_inside.json");
+		TriangleIdentifier triIdentifier = new TriangleIdentifier(_segments);
+		Set<Triangle> computedTriangles = triIdentifier.getTriangles();
+		assertEquals(10, computedTriangles.size());
 	}
 }
