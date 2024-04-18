@@ -57,4 +57,12 @@ class AngleComparatorTest {
 		//same returns -1
 		assertTrue(compare.compare(t1, t1) == -1);
 	}
+	
+	@Test
+	void angleEquals()
+	{
+		Angle t0 = makeAngle(new Point (0,5), new Point(0,0), new Point(5,0), new Point(0, 0));
+		Angle t2 = makeAngle(new Point (0,0), new Point(0,5), new Point(0,0), new Point(5, 0));
+		assertTrue(t0.equals(t2));
+	}
 }

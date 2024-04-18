@@ -29,7 +29,7 @@ public class Angle implements Comparable<Angle>
 	
 	//added to get access to endpoints
 	public Point getRayEndpoint1() { return _ray1Endpoint; }
-	public Point getRayEndPoint2() { return _ray2Endpoint; }
+	public Point getRayEndpoint2() { return _ray2Endpoint; }
 	
 	protected double _measure; 
 	public double getMeasure() { return _measure; }
@@ -188,10 +188,13 @@ public class Angle implements Comparable<Angle>
 		if(this == obj) return true;
 
 		Angle angle = (Angle) obj;
-		if (this._vertex != angle._vertex) return false;
+		if (!this._vertex.equals(angle._vertex)) return false;
 		
-		return angle._ray1Endpoint.equals(_ray2Endpoint) && 
-			   angle._ray2Endpoint.equals(_ray1Endpoint);
+		if(getRayEndpoint1().equals(angle.getRayEndpoint1()) &&
+				getRayEndpoint2().equals(angle.getRayEndpoint2())) return true;
+		if(getRayEndpoint1().equals(angle.getRayEndpoint2()) &&
+				getRayEndpoint2().equals(angle.getRayEndpoint1())) return true;
+		return false;
 	}
 }
 
