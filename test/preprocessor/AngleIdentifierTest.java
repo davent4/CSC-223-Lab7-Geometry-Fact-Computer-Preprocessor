@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -13,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import exceptions.FactException;
 import geometry_objects.Segment;
-import geometry_objects.Triangle;
 import geometry_objects.angle.Angle;
 import geometry_objects.angle.AngleEquivalenceClasses;
 import geometry_objects.points.Point;
@@ -21,7 +19,6 @@ import geometry_objects.points.PointDatabase;
 import components.FigureNode;
 import input.components.exception.NotInDatabaseException;
 import input.InputFacade;
-import input.components.exception.NotInDatabaseException;
 
 class AngleIdentifierTest
 {
@@ -31,7 +28,7 @@ class AngleIdentifierTest
 	
 	protected void init(String filename)
 	{
-		FigureNode fig = InputFacade.extractFigure("crossing_symmetric_triangle.json");
+		FigureNode fig = InputFacade.extractFigure(filename);
 
 		Map.Entry<PointDatabase, Set<Segment>> pair = InputFacade.toGeometryRepresentation(fig);
 
@@ -187,7 +184,6 @@ class AngleIdentifierTest
 			expectedAngles.add(new Angle(bc, ce));			
 		}
 		catch (FactException te) { System.err.println("Invalid Angles in Angle test."); }
-
 		assertEquals(expectedAngles.size(), computedAngles.size());
 		
 		//

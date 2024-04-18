@@ -1,9 +1,6 @@
 package geometry_objects.angle;
 
-import java.util.Comparator;
-
 import geometry_objects.angle.comparators.AngleStructureComparator;
-import utilities.LinkedList;
 import utilities.eq_classes.LinkedEquivalenceClass;
 
 /**
@@ -48,6 +45,8 @@ public class AngleLinkedEquivalenceClass extends LinkedEquivalenceClass<Angle>
 		
 		if(_comparator.compare(_canonical, element) == AngleStructureComparator.STRUCTURALLY_INCOMPARABLE) 
 			return false;
+		
+		//if(_comparator.compare(_canonical, element) == 0) return false;
 		
 		return true;
 	}
