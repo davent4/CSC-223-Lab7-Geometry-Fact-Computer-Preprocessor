@@ -10,9 +10,13 @@ import java.util.Set;
 import exceptions.FactException;
 import geometry_objects.Segment;
 import geometry_objects.Triangle;
-import geometry_objects.angle.Angle;
-import geometry_objects.angle.AngleEquivalenceClasses;
-import geometry_objects.points.Point;
+
+/**
+ * class that finds triangles with a given set of segments
+ *
+ * @author Della Avent, Ellie Johnson, Jack Roberts
+ * @date   April 19 2024
+ */
 
 public class TriangleIdentifier
 {
@@ -21,7 +25,6 @@ public class TriangleIdentifier
 
 	public TriangleIdentifier(Map<Segment, Segment> segments)
 	{
-		//for each entry, key == value
 		_segments = segments;
 	}
 
@@ -45,53 +48,28 @@ public class TriangleIdentifier
 	 */
 	private void computeTriangles()
 	{
-//		//maps and sets are not indexable
-//		//whether this line of code is a good thing is yet to be seen
-//		List<Segment> segments = (List<Segment>) _segments.keySet();
-//		
-//		//tries to create a valid triangle from every combination of segments
-//		for(int i = 0; i < segments.size(); i++)
-//		{
-//			for (int j = i + 1; j < segments.size(); j++)
-//			{ 
-//				for (int k = i + 2; k < segments.size(); k++) 
-//				{ 
-//					Segment first = segments.get(i);
-//					Segment second = segments.get(j);
-//					Segment third = segments.get(k);
-//					List<Segment> segList = new ArrayList<Segment>(Arrays.asList(first, second, third));
-//					try {
-//						//if the triangle is valid, add it to the set
-//						Triangle t = new Triangle(segList);
-//						_triangles.add(t);
-//					} catch (FactException e) {
-//						//if an exception is caught, then the triangle is not valid
-//						//simply move onto a new combo of segments
-//					}
-//				}
-//			}
-//		}
-
-		//maps and sets are not indexable
-		//whether this line of code is a good thing is yet to be seen
-		Set<Segment> segments = _segments.keySet();
-
-		//TODO this is n^3 and a problem
+		//makes _segments indexable
+		List<Segment> segments = _segments.keySet().stream().toList();
+		
 		//tries to create a valid triangle from every combination of segments
-		for(Segment first : segments)
+		//tests every unique combination of segments
+		for(int i = 0; i < segments.size(); i++)
 		{
-			for (Segment second : segments)
+			for (int j = i + 1; j < segments.size(); j++)
 			{ 
-				for (Segment third : segments) 
+				for (int k = i + 2; k < segments.size(); k++) 
 				{ 
+					Segment first = segments.get(i);
+					Segment second = segments.get(j);
+					Segment third = segments.get(k);
 					List<Segment> segList = new ArrayList<Segment>(Arrays.asList(first, second, third));
 					try {
-						//if the triangle is valid, add it to the set
 						Triangle t = new Triangle(segList);
+						//if the triangle is valid, add it to the set
 						_triangles.add(t);
 					} catch (FactException e) {
 						//if an exception is caught, then the triangle is not valid
-						//simply move onto a new combo of segments
+						//simply move onto a new combination of segments
 					}
 				}
 			}

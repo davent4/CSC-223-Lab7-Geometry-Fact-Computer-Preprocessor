@@ -1,20 +1,16 @@
-/**
- * Write a succinct, meaningful description of the class here. You should avoid wordiness    
- * and redundancy. If necessary, additional paragraphs should be preceded by <p>,
- * the html tag for a new paragraph.
- *
- * <p>Bugs: (a list of bugs and / or other problems)
- *
- * @author <your name>
- * @date   <date of completion>
- */
-
 package geometry_objects.angle;
 
 import exceptions.FactException;
 import geometry_objects.Segment;
 import geometry_objects.points.Point;
 import utilities.math.MathUtilities;
+
+/**
+ * class that stores angles as two segments with a shared endpoint without overlap
+ *
+ * @author Dr C. Alvin, Ellie Johnson, Jack Roberts, Della Avent
+ * @date   April 19 2024
+ */
 
 public class Angle implements Comparable<Angle>
 {

@@ -20,6 +20,11 @@ import components.FigureNode;
 import input.components.exception.NotInDatabaseException;
 import input.InputFacade;
 
+/**
+ * @author Dr. C Alvin, Della Avent, Ellie Johnson, Jack Roberts
+ * @date 4/19/24
+ */
+
 class AngleIdentifierTest
 {
 	protected PointDatabase _points;

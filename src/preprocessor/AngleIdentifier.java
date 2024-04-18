@@ -8,6 +8,13 @@ import geometry_objects.Segment;
 import geometry_objects.angle.Angle;
 import geometry_objects.angle.AngleEquivalenceClasses;
 
+/**
+ * class that finds angles with a given set of segments
+ *
+ * @author Ellie Johnson, Della Avent, Jack Roberts
+ * @date   April 19 2024
+ */
+
 public class AngleIdentifier
 {
 	protected AngleEquivalenceClasses _angles;
@@ -33,7 +40,7 @@ public class AngleIdentifier
 		return _angles;
 	}
 
-	//Do I need to exclude straight lines - 180 degree angles?
+	
 	private void computeAngles()
 	{
 		Set<Segment> givenSegments = _segments.keySet();

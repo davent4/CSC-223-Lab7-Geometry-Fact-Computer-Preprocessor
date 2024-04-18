@@ -19,6 +19,11 @@ import components.FigureNode;
 import input.InputFacade;
 import input.components.exception.NotInDatabaseException;
 
+/**
+ * @author Dr. C Alvin, Della Avent, Ellie Johnson, Jack Roberts
+ * @date 4/19/24
+ */
+
 class TriangleIdentifierTest
 {
 	protected PointDatabase _points;
