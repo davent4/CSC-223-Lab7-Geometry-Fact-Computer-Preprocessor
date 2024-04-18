@@ -16,7 +16,8 @@ import geometry_objects.angle.Angle;
 import geometry_objects.angle.AngleEquivalenceClasses;
 import geometry_objects.points.Point;
 import geometry_objects.points.PointDatabase;
-import input.components.FigureNode;
+import components.FigureNode;
+import input.components.exception.NotInDatabaseException;
 import input.InputFacade;
 
 class AngleIdentifierTest
@@ -50,7 +51,7 @@ class AngleIdentifierTest
 	// This figure contains 44 angles
 	//
 	@Test
-	void test_crossing_symmetric_triangle()
+	void test_crossing_symmetric_triangle() throws NotInDatabaseException
 	{
 		init("crossing_symmetric_triangle.json");
 
