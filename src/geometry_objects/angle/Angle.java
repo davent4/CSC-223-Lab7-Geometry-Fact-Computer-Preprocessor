@@ -162,7 +162,7 @@ public class Angle implements Comparable<Angle>
     	Point shared = that.other(_vertex);
     	if (shared == null) return null;
 
-    	// Individual overlaying - original method did not have point as parameter
+    	// Individual overlaying
     	if (Segment.overlaysAsRay(_ray1, that)) return _ray1;
     	
     	if (Segment.overlaysAsRay(_ray2, that)) return _ray2;

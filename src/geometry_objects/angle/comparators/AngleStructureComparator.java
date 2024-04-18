@@ -16,7 +16,6 @@ import java.util.Comparator;
 import geometry_objects.Segment;
 import geometry_objects.angle.Angle;
 import geometry_objects.points.Point;
-import utilities.math.MathUtilities;
 import utilities.math.analytic_geometry.GeometryUtilities;
 
 public class AngleStructureComparator implements Comparator<Angle>
@@ -58,25 +57,31 @@ public class AngleStructureComparator implements Comparator<Angle>
 	 *              1 for greater than
 	 */
 	@Override
-	public int compare(Angle left, Angle right)
+	public int compare(Angle thisS, Angle that)
 	{
 		//conditions that mean it is not comparable structurally
-		Point vertex = left.getVertex();
-		if (!vertex.equals(right.getVertex())) 	return STRUCTURALLY_INCOMPARABLE;
-		if (!left.overlays(right)) 				return STRUCTURALLY_INCOMPARABLE;
+		Point vertex = thisS.getVertex();
+		if (!vertex.equals(that.getVertex())) 	return STRUCTURALLY_INCOMPARABLE;
+		if (!thisS.overlays(that)) 				return STRUCTURALLY_INCOMPARABLE;
 		
-		//returns 0 if the rays are not able to be compared
-		if (left.getRay1().length() < right.getRay1().length() && 
-			left.getRay2().length() > right.getRay2().length())		 return 0;
-
-		//add the total lengths of each angle
-		double leftLength = left.getRay1().length() + left.getRay2().length();
-		double rightLength = right.getRay1().length() + right.getRay2().length();
+		Segment thisone = thisS.getRay1();
+		Segment thistwo = thisS.getRay2();
+		Segment thatone = that.getRay1();
+		Segment thattwo = that.getRay2();
 		
-		//compare the lengths and return if left is the smaller angle
-		if (leftLength < rightLength) 	return -1;
+		if(GeometryUtilities.between(thisone.other(vertex), vertex, thatone.other(vertex)) &&
+		   GeometryUtilities.between(thistwo.other(vertex), vertex, thattwo.other(vertex))) 	return -1;
 		
-		return 1;
+		if(GeometryUtilities.between(thisone.other(vertex), vertex, thattwo.other(vertex)) &&
+		   GeometryUtilities.between(thistwo.other(vertex), vertex, thatone.other(vertex))) 	return -1;
+		
+		if(GeometryUtilities.between(thatone.other(vertex), vertex, thisone.other(vertex)) &&
+		   GeometryUtilities.between(thattwo.other(vertex), vertex, thistwo.other(vertex))) 	return 1;
+		
+		if(GeometryUtilities.between(thatone.other(vertex), vertex, thistwo.other(vertex)) &&
+		   GeometryUtilities.between(thattwo.other(vertex), vertex, thisone.other(vertex))) 	return 1;
+			
+		return 0;
 	}
 }
 

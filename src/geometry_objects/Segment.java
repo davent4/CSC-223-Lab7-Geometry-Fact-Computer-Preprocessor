@@ -233,12 +233,17 @@ public class Segment extends GeometricObject
 	 */
 	public static boolean overlaysAsRay(Segment one, Segment two)
 	{
-		//defines the vertex where the points intersect
-		Point vertex = one.segmentIntersection(two);
+		if(one.equals(two)) return true;
 
+		//defines the vertex where the points intersect
+		Point vertex = one.sharedVertex(two);
+		if(vertex == null) return false;
+		
+		if(!LineDelegate.areCollinear(one, two)) return false;
+		
 		//returns whether or not the other end point is on one of the lines
-		return one.pointLiesBetweenEndpoints(two.other(vertex)) ||
-			   two.pointLiesBetweenEndpoints(one.other(vertex));
+		return GeometryUtilities.between(two.other(vertex), vertex, one.other(vertex)) ||
+				GeometryUtilities.between(one.other(vertex), vertex, two.other(vertex));
 	}
 	
 	/**
