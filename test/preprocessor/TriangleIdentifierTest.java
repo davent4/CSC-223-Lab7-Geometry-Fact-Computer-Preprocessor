@@ -303,21 +303,21 @@ class TriangleIdentifierTest
 		//
 		// Implied minimal segments: 6 in this figure.
 		//
-		Segment ab = new Segment(_points.getPoint("A"), _points.getPoint("B"));
-		Segment bc = new Segment(_points.getPoint("B"), _points.getPoint("C"));
+		//Segment ab = new Segment(_points.getPoint("A"), _points.getPoint("B"));
+		//Segment bc = new Segment(_points.getPoint("B"), _points.getPoint("C"));
 		Segment cd = new Segment(_points.getPoint("C"), _points.getPoint("D"));
 		Segment de = new Segment(_points.getPoint("D"), _points.getPoint("E"));
-		Segment ef = new Segment(_points.getPoint("E"), _points.getPoint("F"));
-		Segment fg = new Segment(_points.getPoint("F"), _points.getPoint("G"));
+		//Segment ef = new Segment(_points.getPoint("E"), _points.getPoint("F"));
+		//Segment fg = new Segment(_points.getPoint("F"), _points.getPoint("G"));
 		
 		//
 		// new non-minimal, computed segments: 10 in this figure. (15 total)
 		//
 		
-		Segment ac = new Segment(_points.getPoint("A"), _points.getPoint("C"));
+		//Segment ac = new Segment(_points.getPoint("A"), _points.getPoint("C"));
 		Segment bd = new Segment(_points.getPoint("B"), _points.getPoint("D"));
 		Segment df = new Segment(_points.getPoint("D"), _points.getPoint("F"));
-		Segment eg = new Segment(_points.getPoint("E"), _points.getPoint("G"));
+		//Segment eg = new Segment(_points.getPoint("E"), _points.getPoint("G"));
 
 		//
 		// Triangles we expect to find

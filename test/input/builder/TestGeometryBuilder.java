@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import components.ComponentNode;
 import components.FigureNode;
-import input.builder.GeometryBuilder;
 import input.components.exception.NotInDatabaseException;
 import input.components.exception.ParseException;
 import input.components.parser.JSONParser;

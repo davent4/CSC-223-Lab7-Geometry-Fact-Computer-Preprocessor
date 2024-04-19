@@ -1,14 +1,10 @@
 package geometry_objects.points;
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.Test;
 
-import geometry_objects.points.Point;
-import geometry_objects.points.PointDatabase;
 import input.components.exception.NotInDatabaseException;
  
 public class TestPointDatabase {

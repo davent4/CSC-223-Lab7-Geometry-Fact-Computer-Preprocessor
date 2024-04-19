@@ -9,15 +9,18 @@ public class AngleTest {
 
     }
 
-    @Test overlaysTest() {
+    @Test 
+    void overlaysTest() {
 
     }
 
-    @Test overlayingRayTest() {
+    @Test
+    void overlayingRayTest() {
 
     }
 
-    @Test sameVertexAsTest() {
-        
+    @Test
+    void sameVertexAsTest() {
+
     }
 }

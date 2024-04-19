@@ -8,10 +8,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 
-import geometry_objects.points.Point;
-import geometry_objects.points.PointNamingFactory;
 import input.components.exception.NotInDatabaseException;
-import input.components.exception.ParseException;
 /**
  * Test PointNamingFactory
  * @author Jackson Tedesco, Case Riddle, Della Avent

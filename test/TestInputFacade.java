@@ -1,24 +1,17 @@
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.AbstractMap;
 import java.util.Set;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.jupiter.api.Test;
 
-import components.ComponentNode;
 import components.FigureNode;
 import geometry_objects.Segment;
 import geometry_objects.points.Point;
 import geometry_objects.points.PointDatabase;
 import input.InputFacade;
-import input.builder.GeometryBuilder;
 import input.components.exception.NotInDatabaseException;
 import input.components.exception.ParseException;
-import input.components.parser.JSONParser;
-import input.components.visitor.ToJSONvisitor;
-import input.components.visitor.UnparseVisitor;
 
 class TestInputFacade {
 	
