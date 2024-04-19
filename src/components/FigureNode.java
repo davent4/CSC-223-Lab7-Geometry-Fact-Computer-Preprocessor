@@ -2,7 +2,6 @@ package components;
 import input.components.visitor.ComponentNodeVisitor;
 import input.components.point.PointNodeDatabase;
 import input.components.segment.SegmentNodeDatabase;
-import utilities.io.StringUtilities;
 
 /**
  * A basic figure consists of points, segments, and an optional description

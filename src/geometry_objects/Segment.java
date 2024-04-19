@@ -235,13 +235,13 @@ public class Segment extends GeometricObject
 	{
 		if(one.equals(two)) return true;
 
-		//defines the vertex where the points intersect
+		// defines the vertex where the points intersect
 		Point vertex = one.sharedVertex(two);
 		if(vertex == null) return false;
 		
 		if(!LineDelegate.areCollinear(one, two)) return false;
 		
-		//returns whether or not the other end point is on one of the lines
+		// returns whether or not the other end point is on one of the lines
 		return GeometryUtilities.between(two.other(vertex), vertex, one.other(vertex)) ||
 				GeometryUtilities.between(one.other(vertex), vertex, two.other(vertex));
 	}

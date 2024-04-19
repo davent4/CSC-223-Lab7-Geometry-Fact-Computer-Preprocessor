@@ -61,7 +61,7 @@ public class AngleStructureComparator implements Comparator<Angle>
 	{
 		//conditions that mean it is not comparable structurally
 		Point vertex = thisS.getVertex();
-		if (!vertex.equals(that.getVertex())) 	return STRUCTURALLY_INCOMPARABLE;
+		if (!thisS.sameVertexAs(that)) 	return STRUCTURALLY_INCOMPARABLE;
 		if (!thisS.overlays(that)) 				return STRUCTURALLY_INCOMPARABLE;
 		
 		Segment thisone = thisS.getRay1();

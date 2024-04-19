@@ -11,7 +11,7 @@ import utilities.eq_classes.LinkedEquivalenceClass;
  *
  *    Consider Angles A and B
  *    * Integer.MAX_VALUE -- indicates that A and B are completely incomparable
-                             STRUCTURALLY (have different measure, don't share sides, etc. )
+ *                           STRUCTURALLY (have different measure, don't share sides, etc. )
  *    * 0 -- The result is indeterminate:
  *           A and B are structurally the same, but it is not clear one is structurally
  *           smaller (or larger) than another
@@ -21,7 +21,8 @@ import utilities.eq_classes.LinkedEquivalenceClass;
  *    We want the 'smallest' angle structurally to be the canonical element of an
  *    equivalence class.
  * 
- * @author XXX
+ * @author Dr C. Alvin, Ellie Johnson, Jack Roberts, Della Avent
+ * @date   April 19 2024
  */
 public class AngleLinkedEquivalenceClass extends LinkedEquivalenceClass<Angle>
 {
@@ -29,7 +30,6 @@ public class AngleLinkedEquivalenceClass extends LinkedEquivalenceClass<Angle>
 	{
 		super(new AngleStructureComparator());
 	}
-	
 	
 	/**
 	 * checks whether an element can be added, or "belongs"

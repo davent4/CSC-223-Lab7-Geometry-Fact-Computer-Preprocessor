@@ -8,10 +8,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import components.ComponentNode;
-import components.FigureNode;
 import input.builder.DefaultBuilder;
-import input.builder.GeometryBuilder;
-import input.components.*;
 import input.components.exception.NotInDatabaseException;
 import input.components.exception.ParseException;
 import input.components.point.PointNode;

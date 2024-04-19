@@ -3,7 +3,6 @@ package input.builder;
 import java.util.List;
 
 import components.FigureNode;
-import input.components.*;
 import input.components.point.*;
 import input.components.segment.SegmentNode;
 import input.components.segment.SegmentNodeDatabase;

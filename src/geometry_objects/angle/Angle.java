@@ -2,6 +2,7 @@ package geometry_objects.angle;
 
 import exceptions.FactException;
 import geometry_objects.Segment;
+import geometry_objects.angle.comparators.AngleStructureComparator;
 import geometry_objects.points.Point;
 import utilities.math.MathUtilities;
 
@@ -73,9 +74,10 @@ public class Angle implements Comparable<Angle>
 		if (ray.equals(getRay2())) return getRay1();
 		return null;
 	}
+
 	/**
 	 * Find the measure of the angle (in radians) specified by the three points.
-	 * Uses Law of Cosines to compute angle
+	 * Uses Law of Cosines to compute angle.
 	 * 
 	 * @param a -- A point defining the angle.
 	 * @param b --  A point defining the angle. This is the vertex of the angle
@@ -105,7 +107,6 @@ public class Angle implements Comparable<Angle>
 		return Math.acos(cosAngle);
 	}
 
-
 	/**
 	 * An angle is foremost distinct from an another angle based on their measures.
 	 * 
@@ -129,44 +130,47 @@ public class Angle implements Comparable<Angle>
 	@Override
 	public int compareTo(Angle that)
 	{
-		return (int)(_measure - that._measure);
+		return new AngleStructureComparator().compare(this, that);
 	}
 	
-    /*
+    /**
 	 * @param angle -- a angle
 	 * @return true / false whether the angle overlays one of the rays/is equivalent
 	 */
     public boolean overlays(Angle that)
     {
-		// Same vertex
-		if (!_vertex.equals(that.getVertex())) return false;
-		
-    	Segment overlays1 = overlayingRay(that._ray1);
-    	Segment overlays2 = overlayingRay(that._ray2);
-    	
-    	// Segment 1 and 2 do NOT align with that angle if one is null
-    	return overlays1 != null && overlays2 != null;
+		// Both rays of Angle that must overlay with a ray from this Angle.
+		// Cannot overlay with the same ray from this Angle because that would
+		// require Angle that to have an angle of 0 degrees, which is not allowed.
+    	return overlayingRay(that._ray1) != null && overlayingRay(that._ray2) != null;
     }
 	
-    /*
+    /**
 	 * @param ray -- a ray
 	 * @return the one of this angle's rays that overlaps with given Segment that
 	 */
     public Segment overlayingRay(Segment that)
     {
-    	// Must share a vertex
-    	Point shared = that.other(_vertex);
-    	if (shared == null) return null;
+    	// Must share a vertex (checked by Segment.overlaysAsRay())
 
     	// Individual overlaying
     	if (Segment.overlaysAsRay(_ray1, that)) return _ray1;
-    	
     	if (Segment.overlaysAsRay(_ray2, that)) return _ray2;
 
     	// No overlaying segment
     	return null;
     }
 	
+	/**
+	 * Returns whether this angle and a given angle share the same vertext
+	 * @param that
+	 * @return		true if this angle's and that angle's vertex are equal; else false
+	 */
+	public boolean sameVertexAs(Angle that) {
+		if (this._vertex == null || that == null) return false;
+		return this._vertex.equals(that._vertex);
+	}
+
 	@Override
 	public String toString()
 	{
@@ -184,7 +188,7 @@ public class Angle implements Comparable<Angle>
 		if(this == obj) return true;
 
 		Angle angle = (Angle) obj;
-		if (!this._vertex.equals(angle._vertex)) return false;
+		if (!sameVertexAs(angle)) return false;
 		
 		if(getRayEndpoint1().equals(angle.getRayEndpoint1()) &&
 				getRayEndpoint2().equals(angle.getRayEndpoint2())) return true;

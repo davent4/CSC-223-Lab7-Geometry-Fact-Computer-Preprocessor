@@ -1,6 +1,5 @@
 package input.components.segment;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -11,7 +10,6 @@ import java.util.Set;
 import components.ComponentNode;
 import input.components.point.PointNode;
 import input.components.visitor.ComponentNodeVisitor;
-import utilities.io.StringUtilities;
 
 /**
  * Database base of segment nodes

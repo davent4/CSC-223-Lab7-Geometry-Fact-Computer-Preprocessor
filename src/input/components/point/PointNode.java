@@ -1,7 +1,6 @@
 package input.components.point;
 import components.ComponentNode;
 import input.components.visitor.ComponentNodeVisitor;
-import utilities.io.StringUtilities;
 import utilities.math.MathUtilities;
 
 
