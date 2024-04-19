@@ -139,6 +139,8 @@ public class Angle implements Comparable<Angle>
 	 */
     public boolean overlays(Angle that)
     {
+    	if (that == null) return false;
+		
 		// Both rays of Angle that must overlay with a ray from this Angle.
 		// Cannot overlay with the same ray from this Angle because that would
 		// require Angle that to have an angle of 0 degrees, which is not allowed.

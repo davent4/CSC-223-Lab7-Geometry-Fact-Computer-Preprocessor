@@ -5,8 +5,8 @@
  *
  * <p>Bugs: (a list of bugs and / or other problems)
  *
- * @author <your name>
- * @date   <date of completion>
+ * @author Della Avent, Ellie Johnson, Jack Roberts
+ * @date   19 April 2024
  */
 
 package geometry_objects.angle.comparators;
@@ -59,10 +59,12 @@ public class AngleStructureComparator implements Comparator<Angle>
 	@Override
 	public int compare(Angle thisS, Angle that)
 	{
+		if (thisS == null || that == null) return STRUCTURALLY_INCOMPARABLE;
+
 		//conditions that mean it is not comparable structurally
 		Point vertex = thisS.getVertex();
 		if (!thisS.sameVertexAs(that)) 	return STRUCTURALLY_INCOMPARABLE;
-		if (!thisS.overlays(that)) 				return STRUCTURALLY_INCOMPARABLE;
+		if (!thisS.overlays(that)) 		return STRUCTURALLY_INCOMPARABLE;
 		
 		Segment thisone = thisS.getRay1();
 		Segment thistwo = thisS.getRay2();

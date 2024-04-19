@@ -93,6 +93,8 @@ public class Segment extends GeometricObject
 	 */
 	public Point sharedVertex(Segment that)
 	{
+		if (that == null) return null;
+		
 		if (this.equals(that)) return null;
 
 		if (_point1.equals(that._point1)) return _point1;
@@ -168,7 +170,6 @@ public class Segment extends GeometricObject
 	 * Note: the segment MAY share an endpoint
 	 * coincide means to be on the same infinite line
 	 */
-
 	public boolean coincideWithoutOverlap(Segment that)
 	{
 		//check collinearity
