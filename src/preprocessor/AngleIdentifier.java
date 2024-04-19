@@ -40,14 +40,21 @@ public class AngleIdentifier
 		return _angles;
 	}
 
-	
+	/**
+	 * private method to create all the possible angles in a figure
+	 * adds all angles into an equivalence class
+	 */
 	private void computeAngles()
 	{
 		Set<Segment> givenSegments = _segments.keySet();
+		
+		//compares every segment and creates an angle if there is a shared
+		//end point. Angles are added to the Equivalence class
 		for (Segment ray1 : givenSegments)
 		{
 			for (Segment ray2 : _segments.keySet())
 			{
+				//makes an angle but can catch the potential exception
 				try {
 					Angle angle = new Angle(ray1, ray2);
 					_angles.add(angle);

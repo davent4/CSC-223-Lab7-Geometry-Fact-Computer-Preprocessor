@@ -84,6 +84,12 @@ public class Point implements Comparable<Point>
 	    }
 	}
 	
+	/**
+	 * 
+	 * @param first Point 1
+	 * @param second Point 2
+	 * @return the distance between two given points
+	 */
 	public static double distance(Point first, Point second)
 	{
 		double changeX = Math.pow(first.getX() - second.getX(), 2);

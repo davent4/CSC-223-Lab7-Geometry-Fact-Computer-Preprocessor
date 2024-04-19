@@ -182,6 +182,9 @@ public class Angle implements Comparable<Angle>
 				            " = " + String.format("%1$.3f", _measure) + ")";
 	}
 
+	/**
+	 * @returns true if an angle's end points are the same
+	 */
 	@Override
 	public boolean equals(Object obj)
 	{

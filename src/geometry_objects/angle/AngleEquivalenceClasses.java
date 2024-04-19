@@ -34,11 +34,14 @@ public class AngleEquivalenceClasses extends EquivalenceClasses<Angle>
 	@Override
 	public boolean add(Angle element) {
 		int index = indexOfClass(element);
+		
+		//if there is a linked equivalence class to belong in, add it
 		if(index > -1) {
 			_classes.get(index).add(element);
 			return false;
 		}
 
+		//makes a new linked equivalence class if there is not one
 		AngleLinkedEquivalenceClass equivalence = new AngleLinkedEquivalenceClass();
 		
 		if(equivalence.add(element)) {
